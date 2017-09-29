@@ -1,0 +1,6 @@
+@import '~@angular/material/prebuilt-themes/pink-bluegrey.css'; /* csslint allow: import */
+
+body {
+    background:lightgray;
+    margin: 0;
+}
