@@ -19,7 +19,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "preinstall": "npm instal -g @angular/cli"
+    "preinstall": "npm install -g @angular/cli"
   },
   "private": true,
   "dependencies": {
