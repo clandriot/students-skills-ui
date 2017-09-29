@@ -16,9 +16,9 @@
   },
   "homepage": "https://github.com/clandriot/students-skills-ui#readme",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build"
+    "ng": "node ./node_modules/@angular/cli/bin/ng",
+    "start": "node ./node_modules/@angular/cli/bin/ng serve",
+    "build": "node ./node_modules/@angular/cli/bin/ng build"
   },
   "private": true,
   "dependencies": {
