@@ -1,0 +1,15 @@
+.navigation-container {
+  width: 100%;
+}
+
+.navigation-content {
+  box-shadow: 3px 0 6px rgba(0,0,0,.24);
+  overflow: auto;
+  padding: 15px;
+}
+
+.navigation-sidenav-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
