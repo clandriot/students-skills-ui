@@ -9,29 +9,40 @@ import {
   MdMenuModule,
   MdToolbarModule,
   MdIconModule,
-  MdSidenavModule
+  MdSidenavModule,
+  MdListModule
 } from '@angular/material';
+
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { ClassesComponent } from './components/classes.component';
+import { NotesComponent } from './components/notes.component';
+import { TrackingComponent } from './components/tracking.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    NavigationComponent
+    NavigationComponent,
+    ClassesComponent,
+    NotesComponent,
+    TrackingComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
+    AppRoutingModule,
     BrowserAnimationsModule,
     MdButtonModule,
     MdMenuModule,
     MdToolbarModule,
     MdIconModule,
-    MdSidenavModule
+    MdSidenavModule,
+    MdListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
