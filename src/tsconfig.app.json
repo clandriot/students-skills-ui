@@ -6,9 +6,6 @@
     "module": "es2017",
     "types": []
   },
-  "include": [
-    "src/**/*"
-  ],
   "exclude": [
     "test.ts",
     "**/*.spec.ts"
