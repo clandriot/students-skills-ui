@@ -8,7 +8,7 @@ app.listen(process.env.PORT || 80);
 
 //PathLocationStrategy
 app.get('/*', (req, res) => {
-  res.sendile(path.join(__dirname + '/dist/index.html'));
+  res.sendFile(path.join(__dirname + '/dist/index.html'));
 })
 
 console.log('Running!')
