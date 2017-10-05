@@ -1,5 +1,17 @@
-.heroes {
-  list-style-type: node;
-  margin: 0;
-  padding: 0;
+.class {
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  display: block;
+  width: 250px;
+  margin: 15px;
+  padding: 3px;
+  float: left;
+}
+
+.class-content {
+  text-align: center;
+}
+
+.class-actions {
+  display: flex;
+  justify-content: space-between;
 }

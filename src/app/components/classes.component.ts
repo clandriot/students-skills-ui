@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Class } from './class/class';
 import { ClassService } from './class/class.service';
@@ -11,7 +12,7 @@ import { ClassService } from './class/class.service';
 export class ClassesComponent implements OnInit {
   classes: Class[];
 
-  constructor(private classService: ClassService) {  }
+  constructor(private classService: ClassService, private router: Router) {  }
 
   ngOnInit() {
     this.getClasses();
@@ -19,5 +20,9 @@ export class ClassesComponent implements OnInit {
 
   getClasses(): void {
     this.classService.getClasses().then(classes => this.classes = classes);
+  }
+
+  goToDetails(selectedClass: Class): void {
+    this.router.navigate(['/class', selectedClass.id]);
   }
 }
