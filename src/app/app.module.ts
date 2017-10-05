@@ -10,7 +10,8 @@ import {
   MdToolbarModule,
   MdIconModule,
   MdSidenavModule,
-  MdListModule
+  MdListModule,
+  MdTableModule,
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +22,11 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { ClassesComponent } from './components/classes.component';
 import { NotesComponent } from './components/notes.component';
 import { TrackingComponent } from './components/tracking.component';
+import { ClassDetailsComponent } from './components/class/class-details.component';
+import { StudentsComponent } from './components/student/students.component';
+
+import { ClassService } from './components/class/class.service';
+import { StudentService } from './components/student/student.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +35,9 @@ import { TrackingComponent } from './components/tracking.component';
     NavigationComponent,
     ClassesComponent,
     NotesComponent,
-    TrackingComponent
+    TrackingComponent,
+    ClassDetailsComponent,
+    StudentsComponent
   ],
   imports: [
     BrowserModule,
@@ -42,9 +50,13 @@ import { TrackingComponent } from './components/tracking.component';
     MdToolbarModule,
     MdIconModule,
     MdSidenavModule,
-    MdListModule
+    MdListModule,
+    MdTableModule
   ],
-  providers: [],
+  providers: [
+    ClassService,
+    StudentService
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

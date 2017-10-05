@@ -32,6 +32,7 @@ li {
 
 li>a {
   box-sizing: border-box;
+  color: rgba(255, 255, 255, 0.7);
   display: block;;
   font-size: 14px;
   font-weight: 400;

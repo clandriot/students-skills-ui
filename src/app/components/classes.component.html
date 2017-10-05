@@ -1,1 +1,8 @@
 <div>Classes</div>
+<p></p>
+
+<md-nav-list>
+  <a md-list-item href="/class/{{class.id}}" *ngFor="let class of classes">{{class.name}}</a>
+</md-nav-list>
+
+<router-outlet></router-outlet>
