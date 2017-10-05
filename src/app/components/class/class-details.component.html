@@ -1,9 +1,19 @@
 <div>Détails de la {{className}}</div>
 <p></p>
 
-<md-nav-list>
+<!-- <md-nav-list>
   <md-list-item *ngFor="let student of students">
     <div class="first-name">{{student.firstName}}</div>
     <div class="last-name">{{student.lastName}}</div>
   </md-list-item>
-</md-nav-list>
+</md-nav-list> -->
+
+<md-card *ngFor="let student of students" class="student">
+  <md-card-content class="student-content">
+    <p>{{student.firstName}} {{student.lastName}}</p>
+  </md-card-content>
+  <md-card-actions class="student-actions">
+    <button md-icon-button><md-icon>edit</md-icon></button>
+    <button md-icon-button><md-icon>clear</md-icon></button>
+  </md-card-actions>
+</md-card>
