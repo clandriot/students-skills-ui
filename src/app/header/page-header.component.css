@@ -1,0 +1,10 @@
+.page-header {
+  background: #e91e63;
+  padding-left: 20px;
+  height: 80px;
+  display: flex;
+  letter-spacing: 1px;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+}

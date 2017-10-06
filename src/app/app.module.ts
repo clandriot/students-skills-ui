@@ -24,6 +24,7 @@ import { NotesComponent } from './components/notes.component';
 import { TrackingComponent } from './components/tracking.component';
 import { ClassDetailsComponent } from './components/class/class-details.component';
 import { StudentsComponent } from './components/student/students.component';
+import { PageHeaderComponent } from './header/page-header.component';
 
 import { ClassService } from './components/class/class.service';
 import { StudentService } from './components/student/student.service';
@@ -37,7 +38,8 @@ import { StudentService } from './components/student/student.service';
     NotesComponent,
     TrackingComponent,
     ClassDetailsComponent,
-    StudentsComponent
+    StudentsComponent,
+    PageHeaderComponent
   ],
   imports: [
     BrowserModule,
