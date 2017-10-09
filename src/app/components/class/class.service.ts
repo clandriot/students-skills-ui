@@ -30,13 +30,20 @@ export class ClassService {
                   .catch(this.handleError);
   }
 
-  deleteClass(id: String): Promise<void> {
-    return null;
+  deleteClass(classToDelete: Class): Promise<void> {
+    const url = `${this.classUrl}/${classToDelete.id}`;
+    return this.http.delete(url, {headers: this.headers})
+                  .toPromise()
+                  .then(() => null)
+                  .catch(this.handleError);
   }
 
   updateClass(newClass: Class): Promise<Class> {
     const url = `${this.classUrl}/${newClass.id}`;
-    return this.http.patch(url, JSON.stringify({name: newClass.name}), {headers: this.headers})
+    const updatedClass = Object.assign({}, newClass);
+    delete updatedClass.id;
+    delete updatedClass.meta;
+    return this.http.patch(url, JSON.stringify(updatedClass), {headers: this.headers})
                   .toPromise()
                   .then(() => newClass)
                   .catch(this.handleError);

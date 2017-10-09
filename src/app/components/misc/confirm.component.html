@@ -1,0 +1,9 @@
+<h1 md-dialog-title>Confirmation</h1>
+<div md-dialog-content class="confirm-content">
+  <md-icon>warning</md-icon>
+  Etes-vous de vouloir supprimer cet objet?
+</div>
+<div md-dialog-actions>
+  <button md-button [md-dialog-close]="{confirm: true}" tabindex="1">Confirmer</button>
+  <button md-button [md-dialog-close]="{confirm: false}" tabindex="-1">Annuler</button>
+</div>

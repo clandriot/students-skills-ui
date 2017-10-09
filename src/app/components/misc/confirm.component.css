@@ -1,0 +1,10 @@
+.confirm-content {
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: larger;
+  display: flex;
+}
+
+.confirm-content md-icon {
+  margin-right: 20px;
+}

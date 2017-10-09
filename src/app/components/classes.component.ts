@@ -5,6 +5,7 @@ import { MdDialog } from '@angular/material';
 import { Class } from './class/class';
 import { ClassService } from './class/class.service';
 import { ClassEditComponent } from './class/class-edit.component';
+import { ConfirmComponent } from './misc/confirm.component';
 
 @Component({
   selector: 'ssi-classes',
@@ -26,6 +27,19 @@ export class ClassesComponent implements OnInit {
 
   goToDetails(selectedClass: Class): void {
     this.router.navigate(['/class', selectedClass.id]);
+  }
+
+  deleteClass(selectedClass: Class): void {
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      role: 'alertdialog'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.confirm === true) {
+        this.classService.deleteClass(selectedClass);
+        this.classes.splice(this.classes.findIndex((curClass) => curClass.id === selectedClass.id));
+      }
+    });
   }
 
   openEditDialog(selectedClass: Class): void {

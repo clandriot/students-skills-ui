@@ -23,6 +23,33 @@ export class StudentService {
                 .catch(this.handleError);
   }
 
+  getStudent(id: String): Promise<Student> {
+    const url = `${this.studentUrl}/${id}`;
+    return this.http.get(url)
+                  .toPromise()
+                  .then(response => response.json() as Student)
+                  .catch(this.handleError);
+  }
+
+  deleteStudent(student: Student): Promise<void> {
+    const url = `${this.studentUrl}/${student.id}`;
+    return this.http.delete(url, {headers: this.headers})
+                  .toPromise()
+                  .then(() => null)
+                  .catch(this.handleError);
+  }
+
+  updateStudent(student: Student): Promise<Student> {
+    const url = `${this.studentUrl}/${student.id}`;
+    const updatedStudent = Object.assign({}, student);
+    delete updatedStudent.id;
+    delete updatedStudent.meta;
+    return this.http.patch(url, JSON.stringify(updatedStudent), {headers: this.headers})
+                  .toPromise()
+                  .then(() => student)
+                  .catch(this.handleError);
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);
     return Promise.reject(error.message || error);

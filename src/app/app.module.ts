@@ -28,6 +28,7 @@ import { ClassDetailsComponent } from './components/class/class-details.componen
 import { StudentsComponent } from './components/student/students.component';
 import { PageHeaderComponent } from './header/page-header.component';
 import { ClassEditComponent } from './components/class/class-edit.component';
+import { ConfirmComponent } from './components/misc/confirm.component';
 
 import { ClassService } from './components/class/class.service';
 import { StudentService } from './components/student/student.service';
@@ -43,7 +44,8 @@ import { StudentService } from './components/student/student.service';
     ClassDetailsComponent,
     StudentsComponent,
     PageHeaderComponent,
-    ClassEditComponent
+    ClassEditComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +64,8 @@ import { StudentService } from './components/student/student.service';
     MdInputModule
   ],
   entryComponents: [
-    ClassEditComponent
+    ClassEditComponent,
+    ConfirmComponent
   ],
   providers: [
     ClassService,

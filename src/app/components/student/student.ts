@@ -3,4 +3,8 @@ export class Student {
   classId: String;
   firstName: String;
   lastName: String;
+  meta: {
+    creationDate: Date;
+    modificationDate: Date;
+  };
 }
