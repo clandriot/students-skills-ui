@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MdDialog } from '@angular/material';
 
 import { Class } from './class/class';
 import { ClassService } from './class/class.service';
+import { ClassEditComponent } from './class/class-edit.component';
 
 @Component({
   selector: 'ssi-classes',
@@ -12,7 +14,7 @@ import { ClassService } from './class/class.service';
 export class ClassesComponent implements OnInit {
   classes: Class[];
 
-  constructor(private classService: ClassService, private router: Router) {  }
+  constructor(private classService: ClassService, private router: Router, private dialog: MdDialog) {  }
 
   ngOnInit() {
     this.getClasses();
@@ -24,5 +26,20 @@ export class ClassesComponent implements OnInit {
 
   goToDetails(selectedClass: Class): void {
     this.router.navigate(['/class', selectedClass.id]);
+  }
+
+  openEditDialog(selectedClass: Class): void {
+    const classBkp = Object.assign({}, selectedClass);
+    const dialogRef = this.dialog.open(ClassEditComponent, {
+      data: selectedClass
+    });
+
+    dialogRef.afterClosed().subscribe(updatedClass => {
+      if (updatedClass && updatedClass.name !== '') {
+        this.classService.updateClass(updatedClass);
+      } else {
+        selectedClass.name = classBkp.name;
+      }
+    });
   }
 }

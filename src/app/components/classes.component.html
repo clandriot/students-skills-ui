@@ -1,10 +1,6 @@
 <ssi-page-header title="Classes"></ssi-page-header>
 <p></p>
 
-<!-- <md-nav-list>
-  <a md-list-item href="/class/{{class.id}}" *ngFor="let class of classes">{{class.name}}</a>
-</md-nav-list> -->
-
 <md-card *ngFor="let class of classes" class="class">
   <md-card-content class="class-content">
     <p>{{class.name}}</p>
@@ -12,7 +8,7 @@
   <md-card-actions class="class-actions">
     <div>
       <button md-icon-button (click)="goToDetails(class)"><md-icon>toc</md-icon></button>
-      <button md-icon-button><md-icon>edit</md-icon></button>
+      <button md-icon-button (click)="openEditDialog(class)"><md-icon>edit</md-icon></button>
     </div>
     <button md-icon-button><md-icon>clear</md-icon></button>
   </md-card-actions>

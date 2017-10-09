@@ -12,6 +12,8 @@ import {
   MdSidenavModule,
   MdListModule,
   MdTableModule,
+  MdDialogModule,
+  MdInputModule,
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -25,6 +27,7 @@ import { TrackingComponent } from './components/tracking.component';
 import { ClassDetailsComponent } from './components/class/class-details.component';
 import { StudentsComponent } from './components/student/students.component';
 import { PageHeaderComponent } from './header/page-header.component';
+import { ClassEditComponent } from './components/class/class-edit.component';
 
 import { ClassService } from './components/class/class.service';
 import { StudentService } from './components/student/student.service';
@@ -39,7 +42,8 @@ import { StudentService } from './components/student/student.service';
     TrackingComponent,
     ClassDetailsComponent,
     StudentsComponent,
-    PageHeaderComponent
+    PageHeaderComponent,
+    ClassEditComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +57,12 @@ import { StudentService } from './components/student/student.service';
     MdIconModule,
     MdSidenavModule,
     MdListModule,
-    MdTableModule
+    MdTableModule,
+    MdDialogModule,
+    MdInputModule
+  ],
+  entryComponents: [
+    ClassEditComponent
   ],
   providers: [
     ClassService,

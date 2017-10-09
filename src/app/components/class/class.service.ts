@@ -35,7 +35,11 @@ export class ClassService {
   }
 
   updateClass(newClass: Class): Promise<Class> {
-    return null;
+    const url = `${this.classUrl}/${newClass.id}`;
+    return this.http.patch(url, JSON.stringify({name: newClass.name}), {headers: this.headers})
+                  .toPromise()
+                  .then(() => newClass)
+                  .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {
