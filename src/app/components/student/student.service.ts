@@ -16,7 +16,7 @@ export class StudentService {
   constructor(private http: Http) {}
 
   getStudents(classId: String): Promise<Student[]> {
-    const filterUrl = this.studentUrl + '?classID=' + classId;
+    const filterUrl = this.studentUrl + '?classID=' + classId + '&sort=lastName&order=asc&pagination=false';
     return this.http.get(filterUrl)
                 .toPromise()
                 .then(response => response.json() as Student[])
@@ -47,6 +47,14 @@ export class StudentService {
     return this.http.patch(url, JSON.stringify(updatedStudent), {headers: this.headers})
                   .toPromise()
                   .then(() => student)
+                  .catch(this.handleError);
+  }
+
+  createStudent(classId: String, firstName: String, lastName: String): Promise<Student> {
+    const body = {classID: classId, firstName: firstName, lastName: lastName};
+    return this.http.post(this.studentUrl, JSON.stringify(body), {headers: this.headers})
+                  .toPromise()
+                  .then(res => res.json() as Student)
                   .catch(this.handleError);
   }
 

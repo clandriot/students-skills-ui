@@ -16,7 +16,8 @@ export class ClassService {
   constructor(private http: Http) {}
 
   getClasses(): Promise<Class[]> {
-    return this.http.get(this.classUrl)
+    const url = this.classUrl + '?sort=name&order=asc&pagination=false';
+    return this.http.get(url)
                 .toPromise()
                 .then(response => response.json() as Class[])
                 .catch(this.handleError);

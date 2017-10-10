@@ -47,6 +47,19 @@ export class ClassDetailsComponent implements OnInit {
     });
   }
 
+  createStudent(): void {
+    const dialogRef = this.dialog.open(StudentEditComponent, {
+      data: {firstName: '', lastName: ''}
+    });
+
+    dialogRef.afterClosed().subscribe(newStudent => {
+      if (newStudent && newStudent.firstName && newStudent.firstName !== '' && newStudent.lastName && newStudent.lastName !== '') {
+        this.studentService.createStudent(this.classId, newStudent.firstName, newStudent.lastName)
+              .then(createdStudent => this.students.push(createdStudent));
+      }
+    });
+  }
+
   openEditDialog(student: Student): void {
     const studentBkp = Object.assign({}, student);
     const dialogRef = this.dialog.open(StudentEditComponent, {

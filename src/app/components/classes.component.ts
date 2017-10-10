@@ -63,7 +63,7 @@ export class ClassesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(newClass => {
-      if (newClass.name && newClass.name !== '') {
+      if (newClass && newClass.name && newClass.name !== '') {
         this.classService.createClass(newClass.name)
               .then(createdClass => this.classes.push(createdClass));
       }
