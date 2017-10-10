@@ -37,7 +37,7 @@ export class ClassesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result.confirm === true) {
         this.classService.deleteClass(selectedClass);
-        this.classes.splice(this.classes.findIndex((curClass) => curClass.id === selectedClass.id));
+        this.classes.splice(this.classes.findIndex((curClass) => curClass.id === selectedClass.id), 1);
       }
     });
   }
@@ -53,6 +53,19 @@ export class ClassesComponent implements OnInit {
         this.classService.updateClass(updatedClass);
       } else {
         selectedClass.name = classBkp.name;
+      }
+    });
+  }
+
+  createClass(): void {
+    const dialogRef = this.dialog.open(ClassEditComponent, {
+      data: {name: ''}
+    });
+
+    dialogRef.afterClosed().subscribe(newClass => {
+      if (newClass.name && newClass.name !== '') {
+        this.classService.createClass(newClass.name)
+              .then(createdClass => this.classes.push(createdClass));
       }
     });
   }

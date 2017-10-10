@@ -49,6 +49,13 @@ export class ClassService {
                   .catch(this.handleError);
   }
 
+  createClass(name: String): Promise<Class> {
+    return this.http.post(this.classUrl, JSON.stringify({name: name}), {headers: this.headers})
+                  .toPromise()
+                  .then(res => res.json() as Class)
+                  .catch ( this.handleError);
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);
     return Promise.reject(error.message || error);
