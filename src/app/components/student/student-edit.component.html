@@ -1,0 +1,19 @@
+<h1 md-dialog-title>Propriétés de l'étudiant</h1>
+<div md-dialog-content>
+  <md-form-field>
+    <input mdInput tabindex="1" [(ngModel)]="data.firstName" name="firstName" placeholder="Prénom" required>
+    <md-error *ngIf="requiredValidator.hasError('required')">
+      Le prénom de l'élève est <strong>obligatore</strong>
+    </md-error>
+  </md-form-field>
+  <md-form-field>
+    <input mdInput tabindex="1" [(ngModel)]="data.lastName" name="lastName" placeholder="Nom de famille" required>
+    <md-error *ngIf="requiredValidator.hasError('required')">
+      Le nom de famille de l'élève est <strong>obligatore</strong>
+    </md-error>
+  </md-form-field>
+</div>
+<div md-dialog-actions>
+  <button md-button [md-dialog-close]="data" tabindex="2">Valider</button>
+  <button md-button (click)="onNoClick()" tabindex="-1">Annuler</button>
+</div>

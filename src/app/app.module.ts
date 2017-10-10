@@ -25,7 +25,7 @@ import { ClassesComponent } from './components/classes.component';
 import { NotesComponent } from './components/notes.component';
 import { TrackingComponent } from './components/tracking.component';
 import { ClassDetailsComponent } from './components/class/class-details.component';
-import { StudentsComponent } from './components/student/students.component';
+import { StudentEditComponent } from './components/student/student-edit.component';
 import { PageHeaderComponent } from './header/page-header.component';
 import { ClassEditComponent } from './components/class/class-edit.component';
 import { ConfirmComponent } from './components/misc/confirm.component';
@@ -42,7 +42,7 @@ import { StudentService } from './components/student/student.service';
     NotesComponent,
     TrackingComponent,
     ClassDetailsComponent,
-    StudentsComponent,
+    StudentEditComponent,
     PageHeaderComponent,
     ClassEditComponent,
     ConfirmComponent
@@ -65,7 +65,8 @@ import { StudentService } from './components/student/student.service';
   ],
   entryComponents: [
     ClassEditComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    StudentEditComponent
   ],
   providers: [
     ClassService,
