@@ -47,3 +47,16 @@
   height: 72px;
   font-size: 72px;
 }
+
+.skill-container {
+  margin: 15px;
+  font-size: larger;
+}
+
+.skill-toggle {
+  margin-bottom: 10px;
+}
+
+.skill-longName {
+  margin-left: 25px;
+}

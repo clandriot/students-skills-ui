@@ -20,6 +20,11 @@
     </md-card>
   </md-tab>
   <md-tab label="Compétences par défaut">
-    <p>To do...</p>
+    <div class="skill-container">
+      <p>Sélectionner les compétences qui seront assignées par défaut aux nouveaux devoirs créés pour cette classe</p>
+      <div *ngFor="let skill of skills" class="skill-toggle">
+        <md-slide-toggle color="primary" [checked]="isDefault(skill)" (change)="onSlideChange($event, skill)"><span><strong>{{skill.shortName}}</strong></span><span class="skill-longName">[{{skill.longName}}]</span></md-slide-toggle>
+      </div>
+    </div>
   </md-tab>
 </md-tab-group>

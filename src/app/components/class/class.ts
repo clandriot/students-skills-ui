@@ -1,7 +1,8 @@
 export class Class {
   id: String;
   name: String;
-  meta: {
+  defaultSkills?: {skillID: String}[];
+  meta?: {
     creationDate: Date;
     modificationDate: Date
   };

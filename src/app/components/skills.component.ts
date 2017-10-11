@@ -7,6 +7,8 @@ import { SkillService } from './skill/skill.service';
 import { SkillEditComponent } from './skill/skill-edit.component';
 import { ConfirmComponent } from './misc/confirm.component';
 
+import * as _ from 'lodash';
+
 @Component({
   selector: 'ssi-skills',
   templateUrl: 'skills.component.html',
@@ -39,7 +41,7 @@ export class SkillsComponent implements OnInit {
   }
 
   openEditDialog(skill: Skill): void {
-    const skillBkp = Object.assign({}, skill);
+    const skillBkp = _.cloneDeep(skill);
     const dialogRef = this.dialog.open(SkillEditComponent, {
       data: skill
     });

@@ -15,7 +15,8 @@ import {
   MdDialogModule,
   MdInputModule,
   MdTabsModule,
-  MdTooltipModule
+  MdTooltipModule,
+  MdSlideToggleModule,
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -70,7 +71,8 @@ import { SkillService } from './components/skill/skill.service';
     MdDialogModule,
     MdInputModule,
     MdTabsModule,
-    MdTooltipModule
+    MdTooltipModule,
+    MdSlideToggleModule
   ],
   entryComponents: [
     ClassEditComponent,

@@ -7,6 +7,8 @@ import { ClassService } from './class/class.service';
 import { ClassEditComponent } from './class/class-edit.component';
 import { ConfirmComponent } from './misc/confirm.component';
 
+import * as _ from 'lodash';
+
 @Component({
   selector: 'ssi-classes',
   templateUrl: 'classes.component.html',
@@ -43,7 +45,7 @@ export class ClassesComponent implements OnInit {
   }
 
   openEditDialog(selectedClass: Class): void {
-    const classBkp = Object.assign({}, selectedClass);
+    const classBkp = _.cloneDeep(selectedClass);
     const dialogRef = this.dialog.open(ClassEditComponent, {
       data: selectedClass
     });

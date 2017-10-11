@@ -6,6 +6,7 @@ import { Class } from './class';
 import { environment } from '../../../environments/environment';
 
 import 'rxjs/add/operator/toPromise';
+import * as _ from 'lodash';
 
 @Injectable()
 export class ClassService {
@@ -41,10 +42,9 @@ export class ClassService {
 
   updateClass(newClass: Class): Promise<Class> {
     const url = `${this.classUrl}/${newClass.id}`;
-    const updatedClass = Object.assign({}, newClass);
-    delete updatedClass.id;
-    delete updatedClass.meta;
-    return this.http.patch(url, JSON.stringify(updatedClass), {headers: this.headers})
+    const updatedClass = _.cloneDeep(newClass);
+
+    return this.http.patch(url, JSON.stringify(_.pick(updatedClass, ['name', 'defaultSkills'])), {headers: this.headers})
                   .toPromise()
                   .then(() => newClass)
                   .catch(this.handleError);
