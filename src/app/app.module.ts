@@ -14,6 +14,8 @@ import {
   MdTableModule,
   MdDialogModule,
   MdInputModule,
+  MdTabsModule,
+  MdTooltipModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -29,9 +31,12 @@ import { StudentEditComponent } from './components/student/student-edit.componen
 import { PageHeaderComponent } from './header/page-header.component';
 import { ClassEditComponent } from './components/class/class-edit.component';
 import { ConfirmComponent } from './components/misc/confirm.component';
+import { SkillsComponent } from './components/skills.component';
+import { SkillEditComponent } from './components/skill/skill-edit.component';
 
 import { ClassService } from './components/class/class.service';
 import { StudentService } from './components/student/student.service';
+import { SkillService } from './components/skill/skill.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +50,9 @@ import { StudentService } from './components/student/student.service';
     StudentEditComponent,
     PageHeaderComponent,
     ClassEditComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    SkillsComponent,
+    SkillEditComponent
   ],
   imports: [
     BrowserModule,
@@ -61,16 +68,20 @@ import { StudentService } from './components/student/student.service';
     MdListModule,
     MdTableModule,
     MdDialogModule,
-    MdInputModule
+    MdInputModule,
+    MdTabsModule,
+    MdTooltipModule
   ],
   entryComponents: [
     ClassEditComponent,
     ConfirmComponent,
-    StudentEditComponent
+    StudentEditComponent,
+    SkillEditComponent
   ],
   providers: [
     ClassService,
-    StudentService
+    StudentService,
+    SkillService
 ],
   bootstrap: [AppComponent]
 })

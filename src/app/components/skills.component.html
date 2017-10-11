@@ -1,0 +1,21 @@
+<ssi-page-header title="Compétences"></ssi-page-header>
+<p></p>
+
+<md-card *ngFor="let skill of skills" class="skill">
+  <h2 md-dialog-title class="skill-center">{{skill.shortName}}</h2>
+  <md-card-content class="skill-center">
+    <div mdTooltip="{{skill.description}}">{{skill.longName}}</div>
+  </md-card-content>
+  <md-card-actions class="skill-actions">
+    <div>
+      <button md-icon-button (click)="openEditDialog(skill)"><md-icon>edit</md-icon></button>
+    </div>
+    <button md-icon-button (click)="deleteSkill(skill)"><md-icon>clear</md-icon></button>
+  </md-card-actions>
+</md-card>
+
+<md-card class="skill-add">
+  <md-card-content class="skill-content-add">
+    <button md-button color="basic" (click)="createSkill()"><md-icon aria-hidden="true" class="add-icon">add</md-icon></button>
+  </md-card-content>
+</md-card>

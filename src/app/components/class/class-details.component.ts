@@ -5,10 +5,15 @@ import { MdDialog } from '@angular/material';
 import 'rxjs/add/operator/map';
 
 import { ClassService } from './class.service';
+
 import { StudentService } from '../student/student.service';
 import { Student } from '../student/student';
 import { ConfirmComponent } from '../misc/confirm.component';
 import { StudentEditComponent } from '../student/student-edit.component';
+
+import { Skill } from '../skill/skill';
+import { SkillService } from '../skill/skill.service';
+
 
 @Component({
   selector: 'ssi-class',
@@ -21,10 +26,12 @@ export class ClassDetailsComponent implements OnInit {
   classId: String;
   className: String;
   students: Student[];
+  skills: Skill[];
 
   constructor(
     private classService: ClassService,
     private studentService: StudentService,
+    private skillService: SkillService,
     private route: ActivatedRoute,
     private dialog: MdDialog) {}
 
@@ -32,6 +39,7 @@ export class ClassDetailsComponent implements OnInit {
     this.route.params.map(param => param.id).subscribe(id => this.classId = id);
     this.classService.getClass(this.classId).then(myClass => this.className = myClass.name);
     this.studentService.getStudents(this.classId).then(students => this.students = students);
+    // this.skillService.getSkills(this.classId).then(skills => this.skills = skills);
   }
 
   deleteStudent(student: Student): void {
