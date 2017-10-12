@@ -19,12 +19,8 @@ export class ClassesComponent implements OnInit {
 
   constructor(private classService: ClassService, private router: Router, private dialog: MdDialog) {  }
 
-  ngOnInit() {
-    this.getClasses();
-  }
-
-  getClasses(): void {
-    this.classService.getClasses().then(classes => this.classes = classes);
+  async ngOnInit() {
+    this.classes = await this.classService.getClasses();
   }
 
   goToDetails(selectedClass: Class): void {
@@ -36,9 +32,9 @@ export class ClassesComponent implements OnInit {
       role: 'alertdialog'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async result => {
       if (result.confirm === true) {
-        this.classService.deleteClass(selectedClass);
+        await this.classService.deleteClass(selectedClass);
         this.classes.splice(this.classes.findIndex((curClass) => curClass.id === selectedClass.id), 1);
       }
     });
@@ -50,9 +46,9 @@ export class ClassesComponent implements OnInit {
       data: selectedClass
     });
 
-    dialogRef.afterClosed().subscribe(updatedClass => {
+    dialogRef.afterClosed().subscribe(async updatedClass => {
       if (updatedClass && updatedClass.name !== '') {
-        this.classService.updateClass(updatedClass);
+        await this.classService.updateClass(updatedClass);
       } else {
         selectedClass.name = classBkp.name;
       }
@@ -64,10 +60,10 @@ export class ClassesComponent implements OnInit {
       data: {name: ''}
     });
 
-    dialogRef.afterClosed().subscribe(newClass => {
+    dialogRef.afterClosed().subscribe(async newClass => {
       if (newClass && newClass.name && newClass.name !== '') {
-        this.classService.createClass(newClass.name)
-              .then(createdClass => this.classes.push(createdClass));
+        const createdClass = await this.classService.createClass(newClass.name);
+        this.classes.push(createdClass);
       }
     });
   }

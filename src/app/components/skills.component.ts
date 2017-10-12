@@ -19,12 +19,8 @@ export class SkillsComponent implements OnInit {
 
   constructor(private skillService: SkillService, private router: Router, private dialog: MdDialog) {  }
 
-  ngOnInit() {
-    this.getSkills();
-  }
-
-  getSkills(): void {
-    this.skillService.getSkills().then(skills => this.skills = skills);
+  async ngOnInit() {
+    this.skills = await this.skillService.getSkills();
   }
 
   deleteSkill(skill: Skill): void {
@@ -32,9 +28,9 @@ export class SkillsComponent implements OnInit {
       role: 'alertdialog'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async result => {
       if (result.confirm === true) {
-        this.skillService.deleteSkill(skill);
+        await this.skillService.deleteSkill(skill);
         this.skills.splice(this.skills.findIndex((curSkill) => curSkill.id === skill.id), 1);
       }
     });
@@ -46,9 +42,9 @@ export class SkillsComponent implements OnInit {
       data: skill
     });
 
-    dialogRef.afterClosed().subscribe(updatedSkill => {
+    dialogRef.afterClosed().subscribe(async updatedSkill => {
       if (updatedSkill && updatedSkill.shortName !== '' && updatedSkill.longtName !== '') {
-        this.skillService.updateSkill(updatedSkill);
+        await this.skillService.updateSkill(updatedSkill);
       } else {
         skill.shortName = skillBkp.shortName;
         skill.longName = skillBkp.longName;
@@ -62,15 +58,15 @@ export class SkillsComponent implements OnInit {
       data: {shortName: '', longName: '', description: ''}
     });
 
-    dialogRef.afterClosed().subscribe(newSkill => {
+    dialogRef.afterClosed().subscribe(async newSkill => {
       if (newSkill &&
          newSkill.shortName &&
          newSkill.shortName !== '' &&
          newSkill.longName &&
          newSkill.longName !== '' &&
          newSkill.description) {
-        this.skillService.createSkill(newSkill.shortName, newSkill.longName, newSkill.description)
-              .then(createdSkill => this.skills.push(createdSkill));
+        const createdSkill = await this.skillService.createSkill(newSkill.shortName, newSkill.longName, newSkill.description);
+        this.skills.push(createdSkill);
       }
     });
   }

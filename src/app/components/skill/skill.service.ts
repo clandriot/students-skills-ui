@@ -15,47 +15,62 @@ export class SkillService {
 
   constructor(private http: Http) {}
 
-  getSkills(): Promise<Skill[]> {
+  async getSkills(): Promise<Skill[]> {
     const url = this.skillUrl + '?sort=shortName&order=asc&pagination=false';
-    return this.http.get(url)
-                .toPromise()
-                .then(response => response.json() as Skill[])
-                .catch(this.handleError);
+
+    try {
+      const response = await this.http.get(url).toPromise();
+      return response.json() as Skill[];
+    } catch (error) {
+      await this.handleError(error);
+    }
   }
 
-  getSkill(id: String): Promise<Skill> {
+  async getSkill(id: String): Promise<Skill> {
     const url = `${this.skillUrl}/${id}`;
-    return this.http.get(url)
-                  .toPromise()
-                  .then(response => response.json() as Skill)
-                  .catch(this.handleError);
+
+    try {
+      const response = await this.http.get(url).toPromise();
+      return response.json() as Skill;
+    } catch (error) {
+      await this.handleError(error);
+    }
   }
 
-  deleteSkill(skill: Skill): Promise<void> {
+  async deleteSkill(skill: Skill): Promise<void> {
     const url = `${this.skillUrl}/${skill.id}`;
-    return this.http.delete(url, {headers: this.headers})
-                  .toPromise()
-                  .then(() => null)
-                  .catch(this.handleError);
+
+    try {
+      const response = await this.http.delete(url, {headers: this.headers}).toPromise();
+      return null;
+    } catch (error) {
+      await this.handleError(error);
+    }
   }
 
-  updateSkill(skill: Skill): Promise<Skill> {
+  async updateSkill(skill: Skill): Promise<Skill> {
     const url = `${this.skillUrl}/${skill.id}`;
     const updatedSkill = Object.assign({}, skill);
     delete updatedSkill.id;
     delete updatedSkill.meta;
-    return this.http.patch(url, JSON.stringify(updatedSkill), {headers: this.headers})
-                  .toPromise()
-                  .then(() => skill)
-                  .catch(this.handleError);
+
+    try {
+      const response = await this.http.patch(url, JSON.stringify(updatedSkill), {headers: this.headers}).toPromise();
+      return response.json() as Skill;
+    } catch (error) {
+      await this.handleError(error);
+    }
   }
 
-  createSkill(shortName: String, longName: String, description: String): Promise<Skill> {
+  async createSkill(shortName: String, longName: String, description: String): Promise<Skill> {
     const body = {shortName: shortName, longName: longName, description: description};
-    return this.http.post(this.skillUrl, JSON.stringify(body), {headers: this.headers})
-                  .toPromise()
-                  .then(res => res.json() as Skill)
-                  .catch(this.handleError);
+
+    try {
+      const response = await this.http.post(this.skillUrl, JSON.stringify(body), {headers: this.headers}).toPromise();
+      return response.json() as Skill;
+    } catch (error) {
+      await this.handleError(error);
+    }
   }
 
   private handleError(error: any): Promise<any> {

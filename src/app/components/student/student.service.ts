@@ -15,47 +15,61 @@ export class StudentService {
 
   constructor(private http: Http) {}
 
-  getStudents(classId: String): Promise<Student[]> {
+  async getStudents(classId: String): Promise<Student[]> {
     const filterUrl = this.studentUrl + '?classID=' + classId + '&sort=lastName&order=asc&pagination=false';
-    return this.http.get(filterUrl)
-                .toPromise()
-                .then(response => response.json() as Student[])
-                .catch(this.handleError);
+
+    try {
+      const response = await this.http.get(filterUrl).toPromise();
+      return response.json() as Student[];
+    } catch (error) {
+      await this.handleError(error);
+    }
   }
 
-  getStudent(id: String): Promise<Student> {
+  async getStudent(id: String): Promise<Student> {
     const url = `${this.studentUrl}/${id}`;
-    return this.http.get(url)
-                  .toPromise()
-                  .then(response => response.json() as Student)
-                  .catch(this.handleError);
+    try {
+      const response = await this.http.get(url).toPromise();
+      return response.json() as Student;
+    } catch (error) {
+      await this.handleError(error);
+    }
   }
 
-  deleteStudent(student: Student): Promise<void> {
+  async deleteStudent(student: Student): Promise<void> {
     const url = `${this.studentUrl}/${student.id}`;
-    return this.http.delete(url, {headers: this.headers})
-                  .toPromise()
-                  .then(() => null)
-                  .catch(this.handleError);
+
+    try {
+      const response = await this.http.delete(url, {headers: this.headers}).toPromise();
+      return null;
+    } catch (error) {
+      await this.handleError(error);
+    }
   }
 
-  updateStudent(student: Student): Promise<Student> {
+  async updateStudent(student: Student): Promise<Student> {
     const url = `${this.studentUrl}/${student.id}`;
     const updatedStudent = Object.assign({}, student);
     delete updatedStudent.id;
     delete updatedStudent.meta;
-    return this.http.patch(url, JSON.stringify(updatedStudent), {headers: this.headers})
-                  .toPromise()
-                  .then(() => student)
-                  .catch(this.handleError);
+
+    try {
+      const response = await this.http.patch(url, JSON.stringify(updatedStudent), {headers: this.headers}).toPromise();
+      return response.json() as Student;
+    } catch (error) {
+      await this.handleError(error);
+    }
   }
 
-  createStudent(classId: String, firstName: String, lastName: String): Promise<Student> {
+  async createStudent(classId: String, firstName: String, lastName: String): Promise<Student> {
     const body = {classID: classId, firstName: firstName, lastName: lastName};
-    return this.http.post(this.studentUrl, JSON.stringify(body), {headers: this.headers})
-                  .toPromise()
-                  .then(res => res.json() as Student)
-                  .catch(this.handleError);
+
+    try {
+      const response = await this.http.post(this.studentUrl, JSON.stringify(body), {headers: this.headers}).toPromise();
+      return response.json() as Student;
+    } catch (error) {
+      await this.handleError(error);
+    }
   }
 
   private handleError(error: any): Promise<any> {

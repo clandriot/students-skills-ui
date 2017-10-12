@@ -40,14 +40,12 @@ export class ClassDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MdDialog) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.route.params.map(param => param.id).subscribe(id => this.classId = id);
-    this.classService.getClass(this.classId).then(myClass => {
-      this.class = myClass;
-      this.className = myClass.name;
-    });
-    this.studentService.getStudents(this.classId).then(students => this.students = students);
-    this.skillService.getSkills().then(skills => this.skills = skills);
+    this.class = await this.classService.getClass(this.classId);
+    this.className = this.class.name;
+    this.students = await this.studentService.getStudents(this.classId);
+    this.skills = await this.skillService.getSkills();
   }
 
   deleteStudent(student: Student): void {
@@ -55,10 +53,10 @@ export class ClassDetailsComponent implements OnInit {
       role: 'alertdialog'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async result => {
       if (result.confirm === true) {
-        this.studentService.deleteStudent(student);
-        this.students.splice(this.students.findIndex((curStudent) => curStudent.id === student.id));
+        await this.studentService.deleteStudent(student);
+        this.students.splice(this.students.findIndex((curStudent) => curStudent.id === student.id), 1);
       }
     });
   }
@@ -68,10 +66,10 @@ export class ClassDetailsComponent implements OnInit {
       data: {firstName: '', lastName: ''}
     });
 
-    dialogRef.afterClosed().subscribe(newStudent => {
+    dialogRef.afterClosed().subscribe(async newStudent => {
       if (newStudent && newStudent.firstName && newStudent.firstName !== '' && newStudent.lastName && newStudent.lastName !== '') {
-        this.studentService.createStudent(this.classId, newStudent.firstName, newStudent.lastName)
-              .then(createdStudent => this.students.push(createdStudent));
+        const createdStudent = await this.studentService.createStudent(this.classId, newStudent.firstName, newStudent.lastName);
+        this.students.push(createdStudent);
       }
     });
   }
@@ -82,9 +80,9 @@ export class ClassDetailsComponent implements OnInit {
       data: student
     });
 
-    dialogRef.afterClosed().subscribe(updatedStudent => {
+    dialogRef.afterClosed().subscribe(async updatedStudent => {
       if (updatedStudent && updatedStudent.firstName !== '' && updatedStudent.lastName !== '') {
-        this.studentService.updateStudent(updatedStudent);
+        await this.studentService.updateStudent(updatedStudent);
       } else {
         student.firstName = studentBkp.firstName;
         student.lastName = studentBkp.lastName;
@@ -92,7 +90,7 @@ export class ClassDetailsComponent implements OnInit {
     });
   }
 
-  onSlideChange(event: MdSlideToggleChange, skill: Skill): void {
+  async onSlideChange(event: MdSlideToggleChange, skill: Skill): Promise<void> {
     if (event.checked === true) {
       if (_.isUndefined(this.class.defaultSkills)) {
         this.class.defaultSkills = [];
@@ -104,7 +102,7 @@ export class ClassDetailsComponent implements OnInit {
       }), 1);
     }
 
-    this.classService.updateClass(this.class);
+    await this.classService.updateClass(this.class);
   }
 
   isDefault(skill: Skill): boolean {

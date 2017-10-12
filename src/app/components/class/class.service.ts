@@ -16,45 +16,57 @@ export class ClassService {
 
   constructor(private http: Http) {}
 
-  getClasses(): Promise<Class[]> {
+  async getClasses(): Promise<Class[]> {
     const url = this.classUrl + '?sort=name&order=asc&pagination=false';
-    return this.http.get(url)
-                .toPromise()
-                .then(response => response.json() as Class[])
-                .catch(this.handleError);
+    try {
+      const response = await this.http.get(url).toPromise();
+      return response.json() as Class[];
+    } catch (error) {
+      await this.handleError(error);
+    }
   }
 
-  getClass(id: String): Promise<Class> {
+  async getClass(id: String): Promise<Class> {
     const url = `${this.classUrl}/${id}`;
-    return this.http.get(url)
-                  .toPromise()
-                  .then(response => response.json() as Class)
-                  .catch(this.handleError);
+    try {
+      const response = await this.http.get(url).toPromise();
+      return response.json() as Class;
+    } catch (error) {
+      await this.handleError(error);
+    }
   }
 
-  deleteClass(classToDelete: Class): Promise<void> {
+  async deleteClass(classToDelete: Class): Promise<void> {
     const url = `${this.classUrl}/${classToDelete.id}`;
-    return this.http.delete(url, {headers: this.headers})
-                  .toPromise()
-                  .then(() => null)
-                  .catch(this.handleError);
+    try {
+      await this.http.delete(url, {headers: this.headers});
+      return null;
+    } catch (error) {
+      await this.handleError(error);
+    }
   }
 
-  updateClass(newClass: Class): Promise<Class> {
+  async updateClass(newClass: Class): Promise<Class> {
     const url = `${this.classUrl}/${newClass.id}`;
     const updatedClass = _.cloneDeep(newClass);
 
-    return this.http.patch(url, JSON.stringify(_.pick(updatedClass, ['name', 'defaultSkills'])), {headers: this.headers})
-                  .toPromise()
-                  .then(() => newClass)
-                  .catch(this.handleError);
+    try {
+      const response = await this.http.patch(url, JSON.stringify(_.pick(updatedClass, ['name', 'defaultSkills'])), {headers: this.headers})
+                                  .toPromise();
+      return response.json() as Class;
+    } catch (error) {
+      await this.handleError(error);
+    }
   }
 
-  createClass(name: String): Promise<Class> {
-    return this.http.post(this.classUrl, JSON.stringify({name: name}), {headers: this.headers})
-                  .toPromise()
-                  .then(res => res.json() as Class)
-                  .catch ( this.handleError);
+  async createClass(name: String): Promise<Class> {
+    try {
+      const response = await this.http.post(this.classUrl, JSON.stringify({name: name}), {headers: this.headers})
+                                .toPromise();
+      return response.json() as Class;
+    } catch (error) {
+      await this.handleError(error);
+    }
   }
 
   private handleError(error: any): Promise<any> {
