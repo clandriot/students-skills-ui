@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { Skill } from './skill/skill';
 import { SkillService } from './skill/skill.service';
@@ -17,7 +17,7 @@ import * as _ from 'lodash';
 export class SkillsComponent implements OnInit {
   skills: Skill[];
 
-  constructor(private skillService: SkillService, private router: Router, private dialog: MdDialog) {  }
+  constructor(private skillService: SkillService, private router: Router, private dialog: MatDialog) {  }
 
   async ngOnInit() {
     this.skills = await this.skillService.getSkills();

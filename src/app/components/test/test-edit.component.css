@@ -1,0 +1,9 @@
+.content-main {
+  display: flex;
+  flex-direction: row;
+}
+
+.content-description {
+  display: flex;
+  flex-direction: column;
+}

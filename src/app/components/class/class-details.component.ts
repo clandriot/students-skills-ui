@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { MdDialog } from '@angular/material';
-import { MdSlideToggleChange } from '@angular/material';
+import { MatDialog } from '@angular/material';
+import { MatSlideToggleChange } from '@angular/material';
 
 import 'rxjs/add/operator/map';
 
@@ -38,7 +38,7 @@ export class ClassDetailsComponent implements OnInit {
     private studentService: StudentService,
     private skillService: SkillService,
     private route: ActivatedRoute,
-    private dialog: MdDialog) {}
+    private dialog: MatDialog) {}
 
   async ngOnInit() {
     this.route.params.map(param => param.id).subscribe(id => this.classId = id);
@@ -90,7 +90,7 @@ export class ClassDetailsComponent implements OnInit {
     });
   }
 
-  async onSlideChange(event: MdSlideToggleChange, skill: Skill): Promise<void> {
+  async onSlideChange(event: MatSlideToggleChange, skill: Skill): Promise<void> {
     if (event.checked === true) {
       if (_.isUndefined(this.class.defaultSkills)) {
         this.class.defaultSkills = [];

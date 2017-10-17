@@ -1,30 +1,30 @@
 <ssi-page-header title="Détail de la {{className}}"></ssi-page-header>
 <p></p>
 
-<md-tab-group>
-  <md-tab label="Etudiants">
-    <md-card *ngFor="let student of students" class="student">
-      <md-card-content class="student-content">
+<mat-tab-group>
+  <mat-tab label="Etudiants">
+    <mat-card *ngFor="let student of students" class="student">
+      <mat-card-content class="student-content">
         <p>{{student.firstName}} {{student.lastName}}</p>
-      </md-card-content>
-      <md-card-actions class="student-actions">
-        <button md-icon-button (click)="openEditDialog(student)"><md-icon>edit</md-icon></button>
-        <button md-icon-button (click)="deleteStudent(student)"><md-icon>clear</md-icon></button>
-      </md-card-actions>
-    </md-card>
+      </mat-card-content>
+      <mat-card-actions class="student-actions">
+        <button mat-icon-button (click)="openEditDialog(student)"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button (click)="deleteStudent(student)"><mat-icon>clear</mat-icon></button>
+      </mat-card-actions>
+    </mat-card>
 
-    <md-card class="student-add">
-      <md-card-content class="student-content-add">
-        <button md-button color="basic" (click)="createStudent()"><md-icon aria-hidden="true" class="student-icon">add</md-icon></button>
-      </md-card-content>
-    </md-card>
-  </md-tab>
-  <md-tab label="Compétences par défaut">
+    <mat-card class="student-add">
+      <mat-card-content class="student-content-add">
+        <button mat-button color="basic" (click)="createStudent()"><mat-icon aria-hidden="true" class="student-icon">add</mat-icon></button>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Compétences par défaut">
     <div class="skill-container">
       <p>Sélectionner les compétences qui seront assignées par défaut aux nouveaux devoirs créés pour cette classe</p>
       <div *ngFor="let skill of skills" class="skill-toggle">
-        <md-slide-toggle color="primary" [checked]="isDefault(skill)" (change)="onSlideChange($event, skill)"><span><strong>{{skill.shortName}}</strong></span><span class="skill-longName">[{{skill.longName}}]</span></md-slide-toggle>
+        <mat-slide-toggle color="primary" [checked]="isDefault(skill)" (change)="onSlideChange($event, skill)"><span><strong>{{skill.shortName}}</strong></span><span class="skill-longName">[{{skill.longName}}]</span></mat-slide-toggle>
       </div>
     </div>
-  </md-tab>
-</md-tab-group>
+  </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,50 @@
+<h1 matDialogTitle>Propriétés du devoir</h1>
+<div mat-dialog-content>
+  <div class="content-main">
+    <mat-form-field>
+      <input matInput tabindex="1" [(ngModel)]="data.name" name="name" placeholder="Nom du devoir" required>
+      <mat-error *ngIf="requiredValidator.hasError('required')">
+        Le nom du devoir est <strong>obligatoire</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput tabindex="2" [matDatepicker]="picker" placeholder="Date du devoir"  [(ngModel)]="data.date" required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="requiredValidator.hasError('required')">
+        La date du devoir est <strong>obligatoire</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field id="fullSize">
+      <textarea matInput tabindex="3" [(ngModel)]="data.description" name="description" placeholder="Description"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div id="title">
+    Sélectionner les compétences incluses dans le devoir et définir les barèmes:
+
+    <mat-table [dataSource]="data.skillSelection">
+      <ng-container matColumnDef="selection">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let row"><mat-checkbox [(ngModel)]="row.selected"></mat-checkbox></mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="shortName">
+        <mat-header-cell *matHeaderCellDef> Nom court </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.shortName}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="scoringScale">
+        <mat-header-cell *matHeaderCellDef> Barème </mat-header-cell>
+        <mat-cell *matCellDef="let row"><input matInput type="number" min="0" max="20" step="1" [(ngModel)]="row.skillScore.scoringScale" [disabled]="!row.selected" required></mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="['selection', 'shortName', 'scoringScale']"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['selection', 'shortName', 'scoringScale']"></mat-row>
+    </mat-table>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button [matDialogClose]="data" tabindex="2">Valider</button>
+  <button mat-button (click)="onNoClick()" tabindex="-1">Annuler</button>
+</div>

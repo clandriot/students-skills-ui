@@ -1,1 +1,19 @@
 <ssi-page-header title="Notes"></ssi-page-header>
+
+<div class="main-container">
+  <div class="classes-container">
+    <p>Liste des classes</p>
+    <div>
+      <mat-card *ngFor="let class of classes" class="class-card">
+        <mat-card-content class="class-content">
+          <a [routerLink]="['/notes', {outlets: {'tests': [class.id]}}]" routerLinkActive="active-link">{{class.name}}</a>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="tests-container">
+    <p>Tests</p>
+    <router-outlet name="tests"></router-outlet>
+  </div>
+</div>

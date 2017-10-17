@@ -1,21 +1,21 @@
 <ssi-page-header title="Classes"></ssi-page-header>
 <p></p>
 
-<md-card *ngFor="let class of classes" class="class">
-  <md-card-content class="class-content">
+<mat-card *ngFor="let class of classes" class="class">
+  <mat-card-content class="class-content">
     <p>{{class.name}}</p>
-  </md-card-content>
-  <md-card-actions class="class-actions">
+  </mat-card-content>
+  <mat-card-actions class="class-actions">
     <div>
-      <button md-icon-button (click)="goToDetails(class)"><md-icon>toc</md-icon></button>
-      <button md-icon-button (click)="openEditDialog(class)"><md-icon>edit</md-icon></button>
+      <button mat-icon-button (click)="goToDetails(class)"><mat-icon>toc</mat-icon></button>
+      <button mat-icon-button (click)="openEditDialog(class)"><mat-icon>edit</mat-icon></button>
     </div>
-    <button md-icon-button (click)="deleteClass(class)"><md-icon>clear</md-icon></button>
-  </md-card-actions>
-</md-card>
+    <button mat-icon-button (click)="deleteClass(class)"><mat-icon>clear</mat-icon></button>
+  </mat-card-actions>
+</mat-card>
 
-<md-card class="class-add">
-  <md-card-content class="class-content-add">
-    <button md-button color="basic" (click)="createClass()"><md-icon aria-hidden="true" class="add-icon">add</md-icon></button>
-  </md-card-content>
-</md-card>
+<mat-card class="class-add">
+  <mat-card-content class="class-content-add">
+    <button mat-button color="basic" (click)="createClass()"><mat-icon aria-hidden="true" class="add-icon">add</mat-icon></button>
+  </mat-card-content>
+</mat-card>

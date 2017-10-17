@@ -2,21 +2,27 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { LOCALE_ID } from '@angular/core';
+
+import { DateAdapter } from '@angular/material';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MdButtonModule,
-  MdMenuModule,
-  MdToolbarModule,
-  MdIconModule,
-  MdSidenavModule,
-  MdListModule,
-  MdTableModule,
-  MdDialogModule,
-  MdInputModule,
-  MdTabsModule,
-  MdTooltipModule,
-  MdSlideToggleModule,
+  MatButtonModule,
+  MatMenuModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatSidenavModule,
+  MatListModule,
+  MatTableModule,
+  MatDialogModule,
+  MatInputModule,
+  MatTabsModule,
+  MatTooltipModule,
+  MatSlideToggleModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatCheckboxModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -34,10 +40,13 @@ import { ClassEditComponent } from './components/class/class-edit.component';
 import { ConfirmComponent } from './components/misc/confirm.component';
 import { SkillsComponent } from './components/skills.component';
 import { SkillEditComponent } from './components/skill/skill-edit.component';
+import { TestsComponent } from './components/test/tests.component';
+import { TestEditComponent } from './components/test/test-edit.component';
 
 import { ClassService } from './components/class/class.service';
 import { StudentService } from './components/student/student.service';
 import { SkillService } from './components/skill/skill.service';
+import { TestService } from './components/test/test.service';
 
 @NgModule({
   declarations: [
@@ -53,7 +62,9 @@ import { SkillService } from './components/skill/skill.service';
     ClassEditComponent,
     ConfirmComponent,
     SkillsComponent,
-    SkillEditComponent
+    SkillEditComponent,
+    TestsComponent,
+    TestEditComponent
   ],
   imports: [
     BrowserModule,
@@ -61,29 +72,35 @@ import { SkillService } from './components/skill/skill.service';
     HttpModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MdButtonModule,
-    MdMenuModule,
-    MdToolbarModule,
-    MdIconModule,
-    MdSidenavModule,
-    MdListModule,
-    MdTableModule,
-    MdDialogModule,
-    MdInputModule,
-    MdTabsModule,
-    MdTooltipModule,
-    MdSlideToggleModule
+    MatButtonModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatTableModule,
+    MatDialogModule,
+    MatInputModule,
+    MatTabsModule,
+    MatTooltipModule,
+    MatSlideToggleModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule
   ],
   entryComponents: [
     ClassEditComponent,
     ConfirmComponent,
     StudentEditComponent,
-    SkillEditComponent
+    SkillEditComponent,
+    TestEditComponent
   ],
   providers: [
     ClassService,
     StudentService,
-    SkillService
+    SkillService,
+    TestService,
+    { provide: LOCALE_ID, useValue: 'fr-FR' }
 ],
   bootstrap: [AppComponent]
 })

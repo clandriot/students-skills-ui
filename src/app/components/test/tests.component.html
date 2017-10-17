@@ -1,0 +1,19 @@
+<mat-card *ngFor="let test of tests" class="test-card">
+  <mat-card-header class="test-header" matTooltip="{{test.description}}">
+    <mat-card-title>{{test.name}}</mat-card-title>
+    <mat-card-subtitle class="test-subtitle">{{getFormattedDate(test)}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-actions class="test-actions">
+    <div>
+      <button mat-icon-button (click)="goToDetails(test)"><mat-icon>toc</mat-icon></button>
+      <button mat-icon-button (click)="openEditDialog(test)"><mat-icon>edit</mat-icon></button>
+    </div>
+    <button mat-icon-button (click)="deleteTest(test)"><mat-icon>clear</mat-icon></button>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card class="test-add">
+  <mat-card-content class="test-content-add">
+    <button mat-button color="basic" (click)="createTest()"><mat-icon aria-hidden="true" class="add-icon">add</mat-icon></button>
+  </mat-card-content>
+</mat-card>

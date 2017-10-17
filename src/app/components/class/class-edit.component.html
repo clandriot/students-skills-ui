@@ -1,13 +1,13 @@
-<h1 md-dialog-title>Propriétés de la classe</h1>
-<div md-dialog-content>
-  <md-form-field>
-    <input mdInput tabindex="1" [(ngModel)]="data.name" name="className" placeholder="Nom de la classe" required>
-    <md-error *ngIf="classNameValidator.hasError('required')">
+<h1 matDialogTitle>Propriétés de la classe</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput tabindex="1" [(ngModel)]="data.name" name="className" placeholder="Nom de la classe" required>
+    <mat-error *ngIf="classNameValidator.hasError('required')">
       Le nom de la classe est <strong>obligatore</strong>
-    </md-error>
-  </md-form-field>
+    </mat-error>
+  </mat-form-field>
 </div>
-<div md-dialog-actions>
-  <button md-button [md-dialog-close]="data" tabindex="2">Valider</button>
-  <button md-button (click)="onNoClick()" tabindex="-1">Annuler</button>
+<div mat-dialog-actions>
+  <button mat-button [matDialogClose]="data" tabindex="2">Valider</button>
+  <button mat-button (click)="onNoClick()" tabindex="-1">Annuler</button>
 </div>

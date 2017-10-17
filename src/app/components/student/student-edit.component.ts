@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'ssi-student-edit',
@@ -10,8 +10,8 @@ import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 export class StudentEditComponent {
   requiredValidator = new FormControl('', [Validators.required]);
 
-  constructor(public dialogRef: MdDialogRef<StudentEditComponent>,
-  @Inject(MD_DIALOG_DATA) public data: any) {  }
+  constructor(public dialogRef: MatDialogRef<StudentEditComponent>,
+  @Inject(MAT_DIALOG_DATA) public data: any) {  }
 
   onNoClick(): void {
     this.dialogRef.close();

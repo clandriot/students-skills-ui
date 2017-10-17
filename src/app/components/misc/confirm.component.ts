@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'ssi-confirm',
@@ -7,5 +7,5 @@ import { MdDialogRef } from '@angular/material';
   styleUrls: ['confirm.component.css']
 })
 export class ConfirmComponent {
-  constructor(public dialogRef: MdDialogRef<ConfirmComponent>) { }
+  constructor(public dialogRef: MatDialogRef<ConfirmComponent>) { }
 }

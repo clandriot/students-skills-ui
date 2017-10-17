@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { Class } from './class/class';
 import { ClassService } from './class/class.service';
@@ -17,7 +17,7 @@ import * as _ from 'lodash';
 export class ClassesComponent implements OnInit {
   classes: Class[];
 
-  constructor(private classService: ClassService, private router: Router, private dialog: MdDialog) {  }
+  constructor(private classService: ClassService, private router: Router, private dialog: MatDialog) {  }
 
   async ngOnInit() {
     this.classes = await this.classService.getClasses();

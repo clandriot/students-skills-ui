@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { Class } from './class/class';
+import { ClassService } from './class/class.service';
 
 @Component({
   selector: 'ssi-notes',
@@ -6,7 +10,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['notes.component.css']
 })
 export class NotesComponent implements OnInit {
-  constructor() {  }
+  private classes: Class[];
 
-  ngOnInit() {}
+  constructor(private ClassService: ClassService, private router: Router) {  }
+
+  async ngOnInit() {
+    this.classes = await this.ClassService.getClasses();
+  }
+
+  goToTests(selectedClass: Class): void {
+    this.router.navigate(['/notes', {outlets: {'tests': [selectedClass.id]}}]);
+  }
 }
