@@ -30,7 +30,7 @@ import { TestEditComponent } from './test-edit.component';
 })
 export class TestsComponent implements OnInit {
   private classId: String;
-  private tests: Test[];
+  tests: Test[];
 
   constructor(private route: ActivatedRoute,
     private testService: TestService,

@@ -10,7 +10,7 @@ import { ClassService } from './class/class.service';
   styleUrls: ['notes.component.css']
 })
 export class NotesComponent implements OnInit {
-  private classes: Class[];
+  classes: Class[];
 
   constructor(private ClassService: ClassService, private router: Router) {  }
 
