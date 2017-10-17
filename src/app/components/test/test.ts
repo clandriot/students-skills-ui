@@ -14,7 +14,7 @@ export class Test {
 
 export class SkillScore {
   skillID: String;
-  scoringScale: Number;
+  scoringScale: number;
 }
 
 export class SkillSelection {
@@ -30,5 +30,5 @@ export class TestResult {
 
 export class TestNote {
   skillID: String;
-  skillNote: Number;
+  skillNote: number;
 }

@@ -46,7 +46,7 @@ export class TestsComponent implements OnInit {
   }
 
   getFormattedDate(test: Test): String {
-    return moment(test.date).format('dddd DD MMMM YYYY');
+    return moment(test.date).locale('fr-FR').format('dddd DD MMMM YYYY');
   }
 
   async updateTests() {
@@ -62,6 +62,75 @@ export class TestsComponent implements OnInit {
       if (result.confirm === true) {
         await this.testService.deleteTest(test);
         this.tests.splice(this.tests.findIndex((curTest) => curTest.id === test.id), 1);
+      }
+    });
+  }
+
+  async updateTest(test: Test): Promise<void> {
+    const allSkills = await this.skillService.getSkills();
+    const curClass = await this.classService.getClass(this.classId);
+    const selectedSkills: SkillSelection[] = [];
+    let skillSelectionStore: SkillSelectionStore;
+    let skillSelectionDataSource: SkillSelectionDataSource;
+
+    _.forEach(allSkills, (skill) => {
+      let selected = false;
+      const testSkill: SkillScore = _.find(test.skills, (currentElem) => currentElem.skillID === skill.id) as SkillScore;
+      let scoringScale = 0;
+      if ( !_.isUndefined(testSkill)) {
+        selected = true;
+        scoringScale = testSkill.scoringScale;
+      }
+      selectedSkills.push({
+        skillScore: {
+          skillID: skill.id,
+          scoringScale: scoringScale
+        },
+        shortName: skill.shortName,
+        selected: selected
+      });
+    });
+
+    skillSelectionStore = new SkillSelectionStore(selectedSkills);
+    skillSelectionDataSource = new SkillSelectionDataSource(skillSelectionStore);
+
+    const testBkp = _.cloneDeep(test);
+    const dialogRef = this.dialog.open(TestEditComponent, {
+      data: {test: test, skillSelection: skillSelectionDataSource}
+    });
+
+    dialogRef.afterClosed().subscribe(async data => {
+      if (data && data.skillSelection) {
+        const skillSelection = data.skillSelection.connect().value;
+
+        if (data.test.name && data.test.name !== '' &&
+              data.test.description && data.test.description !== '' &&
+              data.test.date &&
+              skillSelection && skillSelection.length > 0 ) {
+          const skillScores: SkillScore[] = [];
+          _.forEach(skillSelection, (skill: SkillSelection) => {
+            if ( skill.selected) {
+              skillScores.push({
+                skillID: skill.skillScore.skillID,
+                scoringScale: skill.skillScore.scoringScale});
+            }
+          });
+
+          await this.testService.updateTest({
+              id: test.id,
+              classID: this.classId,
+              name: data.test.name,
+              date: data.test.date,
+              description: data.test.description,
+              skills: skillScores
+            } as Test);
+        }
+      } else {
+        // test = testBkp;
+        test.name = testBkp.name;
+        test.description = testBkp.description;
+        test.date = testBkp.date;
+        test.skills = testBkp.skills;
       }
     });
   }
@@ -91,30 +160,35 @@ export class TestsComponent implements OnInit {
 
     skillSelectionStore = new SkillSelectionStore(selectedSkills);
     skillSelectionDataSource = new SkillSelectionDataSource(skillSelectionStore);
+    const test: Test = new Test();
+    test.classID = this.classId;
+    test.name = '';
+    test.date = new Date();
+    test.description = '';
+    test.skills = [] as SkillScore[];
 
     const dialogRef = this.dialog.open(TestEditComponent, {
-      data: {name: '', description: '', date: new Date(), skillSelection: skillSelectionDataSource}
+      data: {test, skillSelection: skillSelectionDataSource}
     });
 
     dialogRef.afterClosed().subscribe(async data => {
       if (data && data.skillSelection) {
         const skillSelection = data.skillSelection.connect().value;
-        console.log(skillSelection);
 
-        if (data.name && data.name !== '' &&
-              data.description && data.description !== '' &&
-              data.date &&
+        if (data.test.name && data.test.name !== '' &&
+              data.test.description && data.test.description !== '' &&
+              data.test.date &&
               skillSelection && skillSelection.length > 0 ) {
-          const skillScores: SkillScore[] = [];
+
           _.forEach(skillSelection, (skill: SkillSelection) => {
             if ( skill.selected) {
-              skillScores.push({
+              data.test.skills.push({
                 skillID: skill.skillScore.skillID,
                 scoringScale: skill.skillScore.scoringScale});
             }
           });
 
-          const createdTest = await this.testService.createTest(this.classId, data.name, data.date, data.description, skillScores);
+          const createdTest = await this.testService.createTest(data.test);
           this.tests.push(createdTest);
         }
       }

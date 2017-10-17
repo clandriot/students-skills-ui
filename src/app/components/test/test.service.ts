@@ -38,10 +38,24 @@ export class TestService {
     }
   }
 
-  async createTest(classId: String, name: String, date: Date, description: String, skillScores: SkillScore[]): Promise<Test> {
-    const body = {classID: classId, name: name, date: date, description: description, skills: skillScores};
+  async createTest(test: Test): Promise<Test> {
     try {
-      const response = await this.http.post(this.testUrl, JSON.stringify(body), {headers: this.headers}).toPromise();
+      const response = await this.http.post(this.testUrl, JSON.stringify(test), {headers: this.headers}).toPromise();
+      return response.json() as Test;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+  async updateTest(test: Test): Promise<Test> {
+    const url = this.testUrl + '/' + test.id;
+    const updatedTest = _.cloneDeep(test);
+
+    delete updatedTest.id;
+    delete updatedTest.meta;
+
+    try {
+      const response = await this.http.patch(url, JSON.stringify(updatedTest), {headers: this.headers}).toPromise();
       return response.json() as Test;
     } catch (error) {
       await this.handleError(error);
