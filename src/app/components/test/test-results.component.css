@@ -6,6 +6,12 @@
   max-width: 65px;
 }
 
+.header-content {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
 .row :first-child {
   max-width: 300px;
 }
@@ -14,7 +20,7 @@
   max-width: 65px;
 }
 
-.table :nth-child(even) {
+.table :nth-child(2n+3) {
   background: #3C3C3C;
 }
 
@@ -22,8 +28,9 @@ mat-header-cell {
   background-color: #424242 !important;
 }
 
-mat-cell {
+mat-cell:not(.student) {
   background-color: inherit !important;
+  text-align: center;
 }
 
 input.mat-input-element {

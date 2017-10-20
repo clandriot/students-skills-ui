@@ -61,7 +61,7 @@ export class TestResultsComponent implements OnInit {
 
     _.forEach(this.test.skills, testSkill => {
       const skillName = _.find(skills, skill => skill.id === testSkill.skillID).shortName;
-      const column = new SkillColumnDefinition(skillName, testSkill.skillID);
+      const column = new SkillColumnDefinition(skillName, testSkill.skillID, testSkill.scoringScale);
       this.skillColumns.push(column);
       this.displayedColumns.push(column.columnName);
     });
@@ -89,11 +89,17 @@ export class SkillColumnDefinition {
   private name: String;
   private header: String;
   private skillId: String;
+  private scoreScale: number;
 
-  constructor(name: String, skillId: String) {
+  constructor(name: String, skillId: String, scoreScale: number) {
     this.name = skillId;
     this.header = name;
     this.skillId = skillId;
+    this.scoreScale = scoreScale;
+  }
+
+  get columnScoreScale(): number {
+    return this.scoreScale;
   }
 
   get columnName(): String {
