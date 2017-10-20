@@ -1,0 +1,34 @@
+.header :first-child {
+  max-width: 300px;
+}
+
+.header :nth-child(n+2) {
+  max-width: 65px;
+}
+
+.row :first-child {
+  max-width: 300px;
+}
+
+.row :nth-child(n+2) {
+  max-width: 65px;
+}
+
+.table :nth-child(even) {
+  background: #3C3C3C;
+}
+
+mat-header-cell {
+  background-color: #424242 !important;
+}
+
+mat-cell {
+  background-color: inherit !important;
+}
+
+input.mat-input-element {
+    background-color: #484848;
+    border-width: 0;
+    color: white;
+    font-family: "Roboto";
+}

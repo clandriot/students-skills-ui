@@ -28,6 +28,17 @@ export class TestService {
     }
   }
 
+  async getTest(testId: String): Promise<Test> {
+    const url = this.testUrl + '/' + testId;
+
+    try {
+      const response = await this.http.get(url).toPromise();
+      return response.json() as Test;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
   async deleteTest(test: Test): Promise<void> {
     const url = this.testUrl + '/' + test.id;
     try {

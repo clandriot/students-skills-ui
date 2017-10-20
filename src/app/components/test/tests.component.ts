@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 
 import { Component, OnInit  } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 
 import { DataSource } from '@angular/cdk/collections';
@@ -12,9 +12,11 @@ import 'rxjs/add/operator/map';
 
 import { Class } from '../class/class';
 import { ClassService } from '../class/class.service';
+import { Student } from '../student/student';
+import { StudentService } from '../student/student.service';
 import { Skill } from '../skill/skill';
 import { SkillService } from '../skill/skill.service';
-import { Test } from './test';
+import { Test, TestNote } from './test';
 import { SkillScore } from './test';
 import { SkillSelection } from './test';
 import { TestService } from './test.service';
@@ -33,9 +35,11 @@ export class TestsComponent implements OnInit {
   tests: Test[];
 
   constructor(private route: ActivatedRoute,
+    private router: Router,
     private testService: TestService,
     private classService: ClassService,
     private skillService: SkillService,
+    private studentService: StudentService,
     private dialog: MatDialog) {}
 
   ngOnInit() {
@@ -64,6 +68,43 @@ export class TestsComponent implements OnInit {
         this.tests.splice(this.tests.findIndex((curTest) => curTest.id === test.id), 1);
       }
     });
+  }
+
+  goToTestResults(test: Test): void {
+    this.router.navigateByUrl('/notes/' + test.id);
+  }
+
+  async addEmptyResults(test: Test): Promise<Test> {
+    const students: Student[] = await this.studentService.getStudents(this.classId);
+
+    test.results = [];
+    const defaultNotes: TestNote[] = [];
+    _.forEach(test.skills, skill => defaultNotes.push({skillID: skill.skillID, skillNote: 0} as TestNote));
+    _.forEach(students, student => test.results.push({studentID: student.id, notes: defaultNotes}));
+
+    return test;
+  }
+
+  updateTestResults(test: Test, newSkillScores: SkillScore[]): Test {
+    const removedSkills = _.differenceWith(test.skills, newSkillScores,
+      (arrValue: SkillScore, othValue: SkillScore) => arrValue.skillID === othValue.skillID);
+    const addedSkills = _.differenceWith(newSkillScores, test.skills,
+      (arrValue: SkillScore, othValue: SkillScore) => arrValue.skillID === othValue.skillID);
+
+    if (removedSkills.length > 0) {
+      _.forEach(test.results, result => {
+        _.pullAllWith(result.notes, removedSkills, (arrValue: TestNote, othValue: SkillScore) => arrValue.skillID === othValue.skillID);
+      });
+    }
+    if (addedSkills.length > 0) {
+      console.log('in');
+      _.forEach(test.results, result => {
+        console.log(result);
+        _.forEach(addedSkills, addedSkill => result.notes.push({skillID: addedSkill.skillID, skillNote: 0} as TestNote));
+      });
+    }
+
+    return test;
   }
 
   async updateTest(test: Test): Promise<void> {
@@ -116,14 +157,9 @@ export class TestsComponent implements OnInit {
             }
           });
 
-          await this.testService.updateTest({
-              id: test.id,
-              classID: this.classId,
-              name: data.test.name,
-              date: data.test.date,
-              description: data.test.description,
-              skills: skillScores
-            } as Test);
+          test = this.updateTestResults(test, skillScores);
+          test.skills = skillScores;
+          await this.testService.updateTest(test);
         }
       } else {
         // test = testBkp;
@@ -160,7 +196,7 @@ export class TestsComponent implements OnInit {
 
     skillSelectionStore = new SkillSelectionStore(selectedSkills);
     skillSelectionDataSource = new SkillSelectionDataSource(skillSelectionStore);
-    const test: Test = new Test();
+    let test: Test = new Test();
     test.classID = this.classId;
     test.name = '';
     test.date = new Date();
@@ -168,7 +204,7 @@ export class TestsComponent implements OnInit {
     test.skills = [] as SkillScore[];
 
     const dialogRef = this.dialog.open(TestEditComponent, {
-      data: {test, skillSelection: skillSelectionDataSource}
+      data: {test: test, skillSelection: skillSelectionDataSource}
     });
 
     dialogRef.afterClosed().subscribe(async data => {
@@ -188,7 +224,8 @@ export class TestsComponent implements OnInit {
             }
           });
 
-          const createdTest = await this.testService.createTest(data.test);
+          test = await this.addEmptyResults(test);
+          const createdTest = await this.testService.createTest(test);
           this.tests.push(createdTest);
         }
       }

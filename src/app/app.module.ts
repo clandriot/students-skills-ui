@@ -42,6 +42,7 @@ import { SkillsComponent } from './components/skills.component';
 import { SkillEditComponent } from './components/skill/skill-edit.component';
 import { TestsComponent } from './components/test/tests.component';
 import { TestEditComponent } from './components/test/test-edit.component';
+import { TestResultsComponent } from './components/test/test-results.component';
 
 import { ClassService } from './components/class/class.service';
 import { StudentService } from './components/student/student.service';
@@ -64,7 +65,8 @@ import { TestService } from './components/test/test.service';
     SkillsComponent,
     SkillEditComponent,
     TestsComponent,
-    TestEditComponent
+    TestEditComponent,
+    TestResultsComponent
   ],
   imports: [
     BrowserModule,
