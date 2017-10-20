@@ -31,4 +31,12 @@ input.mat-input-element {
     border-width: 0;
     color: white;
     font-family: "Roboto";
+    max-width: 40px !important;
+}
+
+input.mat-input-element:invalid {
+  outline:none;
+  border-color:#e91e63;
+  box-shadow:0 0 10px #e91e63;
+  color: #e91e63;
 }

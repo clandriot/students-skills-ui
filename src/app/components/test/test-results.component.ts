@@ -71,9 +71,17 @@ export class TestResultsComponent implements OnInit {
     return _.find(this.studentNames, studentName => studentName.id === studentID);
   }
 
+  getMaxNote(skillId: String): number {
+    return _.find(this.test.skills, skill => skill.skillID === skillId).scoringScale;
+  }
+
   getTestNote(studentId: String, skillId: String): TestNote {
     const testResult: TestResult = _.find(this.test.results, result => result.studentID === studentId);
     return _.find(testResult.notes, note => note.skillID === skillId);
+  }
+
+  updateTestNote(newValue) {
+    this.testService.updateTest(this.test);
   }
 }
 
@@ -102,14 +110,6 @@ export class TestResultsStore {
 
   constructor(rows: TestResult[]) {
     this.dataChange.next(rows);
-  }
-
-  get data(): TestResult[] {
-    return this.dataChange.value;
-  }
-
-  set data(value: TestResult[]) {
-    console.log(value);
   }
 }
 

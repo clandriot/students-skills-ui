@@ -1,14 +1,14 @@
 <ssi-page-header title="Résultats du devoir {{testName}}"></ssi-page-header>
 <p></p>
 
-<mat-table [dataSource]="dataSource" class="table">
+<mat-table [(dataSource)]="dataSource" class="table">
   <ng-container matColumnDef="Elève">
     <mat-header-cell *matHeaderCellDef>Elève</mat-header-cell>
     <mat-cell *matCellDef="let row" class="cell">{{getStudentName(row.studentID)?.name}}</mat-cell>
   </ng-container>
   <ng-container *ngFor="let skillColumn of skillColumns" [matColumnDef]="skillColumn.columnName">
     <mat-header-cell *matHeaderCellDef>{{skillColumn.columnHeader}}</mat-header-cell>
-    <mat-cell *matCellDef="let row" class="cell"><input matInput type="number" min="0" max="20" step="1" [(ngModel)]="getTestNote(row.studentID, skillColumn.columnName).skillNote"></mat-cell>
+    <mat-cell *matCellDef="let row" class="cell"><input matInput type="number" min="0" [max]="getMaxNote(skillColumn.columnName)" step="1" [(ngModel)]="getTestNote(row.studentID, skillColumn.columnName).skillNote" (ngModelChange)="updateTestNote($event)"></mat-cell>
   </ng-container>
   <mat-header-row *matHeaderRowDef="displayedColumns" class="header"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns" class="row"></mat-row>
