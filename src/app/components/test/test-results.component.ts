@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
 
-import { Test, TestResult, TestNote } from './test';
+import { Test, TestResult, TestNote, SkillScore } from './test';
 import { TestService } from './test.service';
 import { Skill } from '../skill/skill';
 import { SkillService } from '../skill/skill.service';
@@ -27,7 +27,8 @@ export class TestResultsComponent implements OnInit {
   testName: String;
   // skillColumns: SkillColumnDefinition[] = [];
   displayedColumns: String[] = ['Elève'];
-  dataSource: TestResultsDataSource;
+  dataStore: TestOverviewStore;
+  dataSource: TestOverviewDataSource;
   studentNames: any[] = [];
   skillColumns: SkillColumnDefinition[] = [];
 
@@ -48,7 +49,14 @@ export class TestResultsComponent implements OnInit {
     this.testName = this.test.name;
     await this.loadStudentNames();
     await this.buildSkillColumns();
-    this.dataSource = new TestResultsDataSource(new TestResultsStore(this.test.results));
+    this.dataStore = new TestOverviewStore(this.buildAllTestOverviews());
+    this.dataSource = new TestOverviewDataSource(this.dataStore);
+  }
+
+  buildAllTestOverviews(): TestOverview[] {
+    const testOverviews: TestOverview[] = [];
+    _.forEach(this.test.results, result => testOverviews.push(new TestOverview(result, this.test.skills)));
+    return testOverviews;
   }
 
   async loadStudentNames(): Promise<void> {
@@ -65,6 +73,8 @@ export class TestResultsComponent implements OnInit {
       this.skillColumns.push(column);
       this.displayedColumns.push(column.columnName);
     });
+    this.displayedColumns.push('total');
+    this.displayedColumns.push('total20');
   }
 
   getStudentName(studentID: string): String {
@@ -81,6 +91,7 @@ export class TestResultsComponent implements OnInit {
   }
 
   updateTestNote(newValue) {
+    this.dataStore.dataChange.next(this.buildAllTestOverviews());
     this.testService.updateTest(this.test);
   }
 }
@@ -111,20 +122,42 @@ export class SkillColumnDefinition {
   }
 }
 
-export class TestResultsStore {
-  dataChange: BehaviorSubject<TestResult[]> = new BehaviorSubject<TestResult[]>([]);
+export class TestOverview {
+  testResult: TestResult;
+  maxTotal= 0;
+  total = 0;
+  total20: number;
 
-  constructor(rows: TestResult[]) {
+  constructor(testResult: TestResult, skillScores: SkillScore[]) {
+    this.testResult = testResult;
+    _.forEach(skillScores, skillScore => this.maxTotal += skillScore.scoringScale);
+    this._calculateTotal();
+    this._calculateTotal20();
+  }
+
+  private _calculateTotal() {
+    _.forEach(this.testResult.notes, note => this.total += note.skillNote);
+  }
+
+  private _calculateTotal20() {
+    this.total20 = Math.round((20 * this.total / this.maxTotal) * 10) / 10;
+  }
+}
+
+export class TestOverviewStore {
+  dataChange: BehaviorSubject<TestOverview[]> = new BehaviorSubject<TestOverview[]>([]);
+
+  constructor(rows: TestOverview[]) {
     this.dataChange.next(rows);
   }
 }
 
-export class TestResultsDataSource extends DataSource<any> {
-  constructor(private store: TestResultsStore) {
+export class TestOverviewDataSource extends DataSource<any> {
+  constructor(private store: TestOverviewStore) {
     super();
   }
 
-  connect(): Observable<TestResult[]> {
+  connect(): Observable<TestOverview[]> {
     return this.store.dataChange;
   }
 
