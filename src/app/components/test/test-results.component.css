@@ -3,7 +3,7 @@
 }
 
 .header :nth-child(n+2) {
-  max-width: 65px;
+  max-width: 50px;
 }
 
 .header-content {
@@ -17,11 +17,24 @@
 }
 
 .row :nth-child(n+2) {
-  max-width: 65px;
+  max-width: 50px;
 }
 
 .table :nth-child(2n+3) {
   background: #3C3C3C;
+}
+
+.mat-column-total20 {
+  border-right: 1px solid rgba(255,255,255,.12);
+  max-width: 60px !important;
+}
+
+.mat-column-total, .mat-column-total20 {
+  border-left: 1px solid rgba(255,255,255,.12);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 48px; /* :O= */
 }
 
 mat-header-cell {
