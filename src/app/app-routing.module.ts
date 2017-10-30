@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'notes/:id', component: TestResultsComponent},
   { path: 'tracking', component: TrackingComponent },
   { path: 'skills', component: SkillsComponent },
-  { path: 'class/:id', component: ClassDetailsComponent }
+  { path: 'classes/:id', component: ClassDetailsComponent }
 ];
 
 @NgModule({

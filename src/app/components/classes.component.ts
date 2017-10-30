@@ -24,7 +24,7 @@ export class ClassesComponent implements OnInit {
   }
 
   goToDetails(selectedClass: Class): void {
-    this.router.navigate(['/class', selectedClass.id]);
+    this.router.navigate(['/classes', selectedClass.id]);
   }
 
   deleteClass(selectedClass: Class): void {

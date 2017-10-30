@@ -1,6 +1,6 @@
 export class Student {
   id: String;
-  classId: String;
+  classID: String;
   firstName: String;
   lastName: String;
   meta: {

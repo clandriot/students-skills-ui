@@ -1,0 +1,13 @@
+div.selection {
+  display: flex;
+  flex-direction: row;
+  margin: 15px 0 15px 15px;
+}
+
+mat-form-field {
+  margin: 0 15px 0 0;
+}
+
+div.chart {
+  margin: 0 15px 0 15px;
+}

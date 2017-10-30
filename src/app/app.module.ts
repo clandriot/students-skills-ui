@@ -22,7 +22,9 @@ import {
   MatSlideToggleModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatSelectModule,
+  MatFormFieldModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -43,6 +45,7 @@ import { SkillEditComponent } from './components/skill/skill-edit.component';
 import { TestsComponent } from './components/test/tests.component';
 import { TestEditComponent } from './components/test/test-edit.component';
 import { TestResultsComponent } from './components/test/test-results.component';
+import { StudentTrackingComponent } from './components/tracking/student-tracking.component';
 
 import { ClassService } from './components/class/class.service';
 import { StudentService } from './components/student/student.service';
@@ -70,6 +73,7 @@ import { OnReturnDirective } from './directives/on-return.directive';
     TestsComponent,
     TestEditComponent,
     TestResultsComponent,
+    StudentTrackingComponent,
     FocusDirective,
     OnReturnDirective
   ],
@@ -93,7 +97,9 @@ import { OnReturnDirective } from './directives/on-return.directive';
     MatSlideToggleModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSelectModule,
+    MatFormFieldModule
   ],
   entryComponents: [
     ClassEditComponent,

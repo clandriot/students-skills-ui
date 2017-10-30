@@ -1,1 +1,25 @@
 <ssi-page-header title="Suivi des progrès"></ssi-page-header>
+
+<div class="selection">
+  <mat-form-field>
+    <mat-select placeholder="Classe" [(ngModel)]="selectedClass" name="class" (ngModelChange)="loadStudents($event)" matTooltip="Sélectionner une classe">
+      <mat-option *ngFor="let class of classes" [value]="class">
+        {{class.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Elève" [(ngModel)]="selectedStudent" name="student" matTooltip="Sélectionner un élève">
+      <mat-option *ngFor="let student of students" [value]="student">
+        {{student?.lastName}} {{student?.firstName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div [ngSwitch]="selectedStudent" class="chart">
+  <div *ngSwitchCase="null">Sélectionner une classe et un élève</div>
+  <div *ngSwitchDefault>
+    <ssi-student-tracking [student]="selectedStudent"></ssi-student-tracking>
+  </div>
+</div>
