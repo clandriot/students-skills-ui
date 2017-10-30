@@ -107,6 +107,28 @@ export class TestResultsComponent implements OnInit {
 
     return colId + (rowId * this.test.skills.length);
   }
+
+  getClassAverage20() {
+    let average = 0;
+    let average20 = 0;
+    let nbPresent = 0;
+    let total = 0;
+    let maxTotal = 0;
+
+    _.forEach(this.test.skills, skill => maxTotal += skill.scoringScale);
+
+    _.forEach(this.testOverviews, testOverview => {
+      if (!_.isNull(testOverview.total)) {
+        nbPresent++;
+        total += testOverview.total;
+      }
+    });
+
+    average = total / nbPresent;
+    average20 = Math.round((20 * average / maxTotal) * 10) / 10;
+
+    return average20;
+  }
 }
 
 export class SkillColumnDefinition {
@@ -154,11 +176,18 @@ export class TestOverview {
 
   private _calculateTotal() {
     this.total = 0;
-    _.forEach(this.testResult.notes, note => this.total += note.skillNote);
+    for (let i = 0; i < this.testResult.notes.length; i++) {
+      if (_.isNull(this.testResult.notes[i].skillNote)) {
+        this.total = null;
+        break;
+      } else {
+        this.total += this.testResult.notes[i].skillNote;
+      }
+    }
   }
 
   private _calculateTotal20() {
-    this.total20 = Math.round((20 * this.total / this.maxTotal) * 10) / 10;
+    this.total20 = _.isNull(this.total) ? null : Math.round((20 * this.total / this.maxTotal) * 10) / 10;
   }
 }
 

@@ -25,12 +25,12 @@
 }
 
 .mat-column-total20 {
-  border-right: 4px solid rgba(255,255,255,.12);
+  border-right: 1px solid rgba(255,255,255,.12);
   max-width: 60px !important;
 }
 
 .mat-column-total, .mat-column-total20 {
-  border-left: 4px solid rgba(255,255,255,.12);
+  border-left: 1px solid rgba(255,255,255,.12);
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -56,7 +56,25 @@ input.mat-input-element {
 
 input.mat-input-element:invalid {
   outline:none;
+  border-color:#d87b29;
+  box-shadow:0 0 10px #d87b29;
+  color: #d87b29;
+}
+
+input.mat-input-element:out-of-range {
+  outline:none;
   border-color:#e91e63;
   box-shadow:0 0 10px #e91e63;
   color: #e91e63;
+}
+
+.missing {
+  font-style: italic;
+  color: #d8d8d8;
+}
+
+.classAverage {
+  font-size: 14px;
+  font-weight: 900;
+  color: white;
 }

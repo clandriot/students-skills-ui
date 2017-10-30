@@ -8,11 +8,26 @@
 
   <ng-container matColumnDef="total">
     <mat-header-cell *matHeaderCellDef><div class="header-content">Note</div></mat-header-cell>
-    <mat-cell *matCellDef="let row">{{row.total}}</mat-cell>
+    <mat-cell *matCellDef="let row">
+      <div [ngSwitch]="row.total">
+        <div *ngSwitchCase="null" class="missing">Abs</div>
+        <div *ngSwitchDefault>{{row.total}}</div>
+      </div>
+    </mat-cell>
   </ng-container>
   <ng-container matColumnDef="total20">
-    <mat-header-cell *matHeaderCellDef><div class="header-content">Note /20</div></mat-header-cell>
-    <mat-cell *matCellDef="let row">{{row.total20}}</mat-cell>
+    <mat-header-cell *matHeaderCellDef>
+      <div class="header-content">
+        <span>Note /20</span>
+        <span class="classAverage">{{getClassAverage20()}}</span>
+      </div>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <div [ngSwitch]="row.total">
+        <div *ngSwitchCase="null" class="missing">Abs</div>
+        <div *ngSwitchDefault>{{row.total20}}</div>
+      </div>
+    </mat-cell>
   </ng-container>
 
   <ng-container *ngFor="let skillColumn of skillColumns; let colId = index" [matColumnDef]="skillColumn.columnName">
@@ -23,7 +38,7 @@
       </div>
     </mat-header-cell>
     <mat-cell *matCellDef="let row">
-      <input matInput type="number" min="0" [max]="getMaxNote(skillColumn.columnName)" step="0.1" [(ngModel)]="getTestNote(row.testResult.studentID, skillColumn.columnName).skillNote" (ngModelChange)="updateTestNote($event, row.testResult.studentID, skillColumn.columnName)" ssiOnReturn>
+      <input matInput type="number" min="0" [max]="getMaxNote(skillColumn.columnName)" step="0.1" [(ngModel)]="getTestNote(row.testResult.studentID, skillColumn.columnName).skillNote" (ngModelChange)="updateTestNote($event, row.testResult.studentID, skillColumn.columnName)" ssiOnReturn required>
     </mat-cell>
   </ng-container>
 
