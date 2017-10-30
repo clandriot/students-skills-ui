@@ -25,12 +25,12 @@
 }
 
 .mat-column-total20 {
-  border-right: 1px solid rgba(255,255,255,.12);
+  border-right: 4px solid rgba(255,255,255,.12);
   max-width: 60px !important;
 }
 
 .mat-column-total, .mat-column-total20 {
-  border-left: 1px solid rgba(255,255,255,.12);
+  border-left: 4px solid rgba(255,255,255,.12);
   display: flex;
   justify-content: center;
   flex-direction: column;

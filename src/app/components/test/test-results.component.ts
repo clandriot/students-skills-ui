@@ -27,6 +27,7 @@ export class TestResultsComponent implements OnInit {
   testName: String;
   // skillColumns: SkillColumnDefinition[] = [];
   displayedColumns: String[] = ['Elève'];
+  testOverviews: TestOverview[] = [];
   dataStore: TestOverviewStore;
   dataSource: TestOverviewDataSource;
   studentNames: any[] = [];
@@ -49,13 +50,15 @@ export class TestResultsComponent implements OnInit {
     this.testName = this.test.name;
     await this.loadStudentNames();
     await this.buildSkillColumns();
-    this.dataStore = new TestOverviewStore(this.buildAllTestOverviews());
+    this.testOverviews = this.buildAllTestOverviews();
+    this.dataStore = new TestOverviewStore(this.testOverviews);
     this.dataSource = new TestOverviewDataSource(this.dataStore);
   }
 
   buildAllTestOverviews(): TestOverview[] {
     const testOverviews: TestOverview[] = [];
     _.forEach(this.test.results, result => testOverviews.push(new TestOverview(result, this.test.skills)));
+
     return testOverviews;
   }
 
@@ -90,9 +93,19 @@ export class TestResultsComponent implements OnInit {
     return _.find(testResult.notes, note => note.skillID === skillId);
   }
 
-  updateTestNote(newValue) {
-    this.dataStore.dataChange.next(this.buildAllTestOverviews());
+  updateTestNote(newValue, studentId, skillId) {
+    const testOverview: TestOverview = _.find(this.testOverviews, current => current.testResult.studentID === studentId);
+    const testNote: TestNote = _.find(testOverview.testResult.notes, current => current.skillID === skillId);
+    testNote.skillNote = newValue;
+    testOverview.updateTotals();
+    this.dataStore.dataChange.next(this.testOverviews);
     this.testService.updateTest(this.test);
+  }
+
+  getTabIndex(studentId: String, colId: number): number {
+    const rowId = _.findIndex(this.test.results, result => result.studentID === studentId);
+
+    return colId + (rowId * this.test.skills.length);
   }
 }
 
@@ -131,11 +144,16 @@ export class TestOverview {
   constructor(testResult: TestResult, skillScores: SkillScore[]) {
     this.testResult = testResult;
     _.forEach(skillScores, skillScore => this.maxTotal += skillScore.scoringScale);
+    this.updateTotals();
+  }
+
+  updateTotals() {
     this._calculateTotal();
     this._calculateTotal20();
   }
 
   private _calculateTotal() {
+    this.total = 0;
     _.forEach(this.testResult.notes, note => this.total += note.skillNote);
   }
 

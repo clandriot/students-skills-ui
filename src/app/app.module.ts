@@ -49,6 +49,9 @@ import { StudentService } from './components/student/student.service';
 import { SkillService } from './components/skill/skill.service';
 import { TestService } from './components/test/test.service';
 
+import { FocusDirective } from './directives/focus.directive';
+import { OnReturnDirective } from './directives/on-return.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,7 +69,9 @@ import { TestService } from './components/test/test.service';
     SkillEditComponent,
     TestsComponent,
     TestEditComponent,
-    TestResultsComponent
+    TestResultsComponent,
+    FocusDirective,
+    OnReturnDirective
   ],
   imports: [
     BrowserModule,
