@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
 
 @Directive({
     selector: '[ssiOnReturn]'
@@ -8,7 +8,7 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 export class OnReturnDirective {
     private el: ElementRef;
     @Input() ssiOnReturn: string;
-    constructor(private _el: ElementRef) {
+    constructor(private _el: ElementRef, private renderer: Renderer2) {
         this.el = this._el;
     }
     @HostListener('keydown', ['$event']) onKeyDown(e) {
@@ -28,28 +28,18 @@ export class OnReturnDirective {
     }
 
     private _findNextInput(currentInput: HTMLElement): HTMLElement {
-      let nextInput: HTMLElement = null;
+      const currentIdStr: String = currentInput.id;
+      const currentId: number = Number(currentIdStr.substr('input-'.length, currentIdStr.length - 'input-'.length));
 
-      let currentElement = currentInput.parentElement.nextElementSibling;
-      let children = currentElement.children;
-      while (children.length !== 1) {
-        currentElement = currentElement.nextElementSibling;
-        if ( _.isNull(currentElement.nextElementSibling)) {
-          // reached the of a row
-          if (_.isNull(currentElement.parentElement.nextElementSibling)) {
-            // reached last row
-            currentElement = currentElement.parentElement.parentElement.children[1].children[1];
-          } else {
-            currentElement = currentElement.parentElement.nextElementSibling.children[1];
-          }
-        } else {
-          currentElement = currentElement.nextElementSibling;
-        }
-        children = currentElement.children;
+      const nextId = '#input-' + (currentId + 1);
+      let nextElem: HTMLElement;
+
+      try {
+        nextElem = this.renderer.selectRootElement(nextId);
+      } catch (error) {
+        nextElem = this.renderer.selectRootElement('#input-0');
       }
 
-      nextInput = children[0] as HTMLElement;
-
-      return nextInput;
+      return nextElem;
     }
 }

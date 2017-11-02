@@ -102,10 +102,10 @@ export class TestResultsComponent implements OnInit {
     this.testService.updateTest(this.test);
   }
 
-  getTabIndex(studentId: String, colId: number): number {
+  getInputId(studentId: String, colId: number): String {
     const rowId = _.findIndex(this.test.results, result => result.studentID === studentId);
 
-    return colId + (rowId * this.test.skills.length);
+    return 'input-' + (colId + (rowId * this.test.skills.length));
   }
 
   getClassAverage20() {
