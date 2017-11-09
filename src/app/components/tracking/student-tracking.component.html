@@ -1,1 +1,7 @@
 {{student.firstName}}
+<div *ngIf="lineChartData">
+  <canvas baseChart [datasets]="lineChartData.series"
+                    [labels]="lineChartLabels"
+                    [options]="lineChartOptions"
+                    chartType="line"></canvas>
+</div>

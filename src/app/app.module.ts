@@ -27,6 +27,8 @@ import {
   MatFormFieldModule
 } from '@angular/material';
 
+import { ChartsModule } from 'ng2-charts';
+
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -99,7 +101,8 @@ import { OnReturnDirective } from './directives/on-return.directive';
     MatNativeDateModule,
     MatCheckboxModule,
     MatSelectModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ChartsModule
   ],
   entryComponents: [
     ClassEditComponent,
