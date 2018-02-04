@@ -17,11 +17,10 @@
   "homepage": "https://github.com/clandriot/students-skills-ui#readme",
   "scripts": {
     "ng": "ng",
-    "start": "node server.js",
+    "start": "npm run updateenv && ng build --aot --target=production && node server.js",
     "build": "ng build",
     "updateenv": "node ./scripts/replace.build.js",
-    "preinstall": "npm install -g @angular/cli",
-    "postinstall": "npm run updateenv && ng build --aot --target=production"
+    "preinstall": "npm install -g @angular/cli"
   },
   "private": true,
   "dependencies": {
@@ -46,7 +45,7 @@
     "moment": "^2.19.1",
     "ng2-charts": "^1.6.0",
     "path": "^0.12.7",
-    "replace-in-file": "^3.1.1",
+    "replace": "^0.3.0",
     "rxjs": "^5.4.2",
     "typescript": "~2.3.3",
     "zone.js": "^0.8.14"
