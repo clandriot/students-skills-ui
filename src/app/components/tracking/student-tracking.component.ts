@@ -27,7 +27,25 @@ export class StudentTrackingComponent implements OnChanges {
   lineChartData: ChartData;
   lineChartOptions: any = {
     responsive: true,
-    spanGaps: true
+    spanGaps: true,
+    tooltips: {
+      callbacks: {
+        label: function(tooltipItem, chart) {
+          return chart.datasets[tooltipItem.datasetIndex].label + ': ' + tooltipItem.yLabel + ' %';
+        }
+      }
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          min: 0,
+          max: 100,
+          callback: function(value, index, values) {
+            return value + ' %';
+          }
+        }
+      }]
+    }
   };
   lineChartLabels: String[];
 
@@ -50,7 +68,6 @@ export class StudentTrackingComponent implements OnChanges {
     }
 
     this._loadChartData();
-    console.log(this.lineChartData.series);
   }
 
   private _loadChartData() {
@@ -73,8 +90,9 @@ export class StudentTrackingComponent implements OnChanges {
         // add NaN for current skill
         this.lineChartData.addPoint(NaN, skill.longName);
       } else {
-        const note = _.find(testResult.notes, testNote => testNote.skillID === skill.id).skillNote;
-        this.lineChartData.addPoint(note, skill.longName);
+        const testNote = _.find(testResult.notes, curTestNote => curTestNote.skillID === skill.id);
+        const percent = this._calculatePercent(testNote, test);
+        this.lineChartData.addPoint(percent, skill.longName);
       }
     });
   }
@@ -98,25 +116,8 @@ export class StudentTrackingComponent implements OnChanges {
     return inTest;
   }
 
-  // private _loadChartData() {
-  //   this.lineChartData = new ChartData();
-  //
-  //   for (const test of this.tests) {
-  //     this._loadTestInChartData(test);
-  //   }
-  // }
-  //
-  // private _loadTestInChartData(test: Test) {
-  //   const testResult = _.find(test.results, result => result.studentID === this.student.id);
-  //
-  //   for (const testNote of testResult.notes) {
-  //     const curSkill = _.find(this.skills, skill => skill.id === testNote.skillID);
-  //
-  //     this.lineChartData.addPoint(testNote.skillNote, curSkill.longName);
-  //   }
-  // }
-
-  private _calculatePercent(note: number, max: number): number {
-    return Math.round(1000 * note / max) / 10;
+  private _calculatePercent(testNote: TestNote, test: Test): number {
+    const max = _.find(test.skills, skill => skill.skillID === testNote.skillID).scoringScale;
+    return Math.round(1000 * testNote.skillNote / max) / 10;
   }
 }
