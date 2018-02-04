@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost/api/v1/'
+  apiUrl: 'https://student-skills-stagging.herokuapp.com/api/v1'
 };
