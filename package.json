@@ -17,10 +17,11 @@
   "homepage": "https://github.com/clandriot/students-skills-ui#readme",
   "scripts": {
     "ng": "ng",
-    "start": "npm run updateenv && ng build --aot --target=production && node --optimize_for_size --max_old_space_size=460 server.js",
+    "start": "node --optimize_for_size --max_old_space_size=460 server.js",
     "build": "ng build",
     "updateenv": "node ./scripts/replace.build.js",
-    "preinstall": "npm install -g @angular/cli"
+    "preinstall": "npm install -g @angular/cli",
+    "postinstall": "npm run updateenv && ng build --aot --target=production"
   },
   "private": true,
   "dependencies": {
