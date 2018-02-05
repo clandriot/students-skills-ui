@@ -39,7 +39,7 @@ export class ClassService {
   async deleteClass(classToDelete: Class): Promise<void> {
     const url = `${this.classUrl}/${classToDelete.id}`;
     try {
-      await this.http.delete(url, {headers: this.headers});
+      await this.http.delete(url, {headers: this.headers}).toPromise();
       return null;
     } catch (error) {
       await this.handleError(error);
