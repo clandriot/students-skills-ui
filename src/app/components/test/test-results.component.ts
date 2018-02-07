@@ -74,8 +74,17 @@ export class TestResultsComponent implements OnInit {
       const skillName = _.find(skills, skill => skill.id === testSkill.skillID).shortName;
       const column = new SkillColumnDefinition(skillName, testSkill.skillID, testSkill.scoringScale);
       this.skillColumns.push(column);
-      this.displayedColumns.push(column.columnName);
     });
+
+    const orderedSkills: String[] = ['RCO', 'ANA', 'REA', 'COM', 'EXP'];
+    this.skillColumns = this.skillColumns.sort((a, b) => {
+      const indexA: number = _.findIndex(orderedSkills, elem => elem === a.columnHeader);
+      const indexB: number = _.findIndex(orderedSkills, elem => elem === b.columnHeader);
+      return indexA - indexB;
+    });
+
+    _.forEach(this.skillColumns, skillColumn => this.displayedColumns.push(skillColumn.columnName));
+
     this.displayedColumns.push('total');
     this.displayedColumns.push('total20');
   }
